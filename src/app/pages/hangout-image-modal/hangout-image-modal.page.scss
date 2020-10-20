@@ -1,0 +1,43 @@
+//.body {
+//  position: relative;
+//}
+//.body-content {
+//  //position: relative;
+//  max-width: 800px;
+//  margin: auto;
+//}
+//.inner-content {
+//  position: relative;
+//  background: #000000;
+//  contain: content;
+//  align-items: center;
+//}
+ion-content {
+  position: relative;
+  --background: #000000;
+  object-fit: contain;
+  align-items: center;
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+ion-header {
+  --color: #222;
+  position: absolute;
+  top: 0;
+}
+ion-footer {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 0;
+}
+.thumb {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 200px;
+}
+
+

@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar color="plot-lite">
+    <ion-title>Drink Options</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" size="small" color="light" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-card class="imageCards">
+      <div>
+        <img class="menuImg" tappable (click)="enlargeImage(coverImage)" [src]="coverImage" alt="loading..."
+             onerror="this.onerror=null;this.src='assets/eventsFallbackImage.jpg';">
+      </div>
+    </ion-card>
+    <!--        <div class="imageCards">-->
+    <!--            <img class="menuImg" tappable (click)="enlargeImage(coverImage)" [src]="coverImage" alt="loading..."-->
+    <!--                 onerror="this.onerror=null;this.src='assets/eventsFallbackImage.jpg';">-->
+    <!--        </div>-->
+    <div class="my-card">
+      <ion-card-content>
+        <ion-card-title class="menuTitle">
+          {{menu.name}}
+        </ion-card-title>
+      </ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let opt of optList">
+            <ion-card class="my-opt-card">
+              <div class="ava-photo">
+                <img [src]="opt.photoUrl">
+              </div>
+              <ion-card-content class="price">
+                <ion-label>
+                  <p>{{opt.option}}</p>
+                </ion-label>
+              </ion-card-content>
+              <ion-item (click)="editPricePrompt(opt)">
+                <p>Price: <b>{{opt.price ? opt.price.toString() : ''}}</b></p>
+                <ion-icon class="editIcon" slot="end" name="pencil"></ion-icon>
+              </ion-item>
+              <ion-item>
+                <ion-label>Available</ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="opt.available" (click)="changeAvail(opt)"></ion-checkbox>
+              </ion-item>
+              <ion-card-header>
+                Caution
+              </ion-card-header>
+              <ion-item (click)="deleteOpt(opt)">
+                <ion-label color="danger">Remove</ion-label>
+                <ion-icon color="danger" slot="end" name="close-circle-outline"></ion-icon>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-card-content>
+        <ion-card-title class="menuTitle">
+          Other Options
+        </ion-card-title>
+      </ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let opt of otherList">
+            <ion-card class="my-opt-card">
+              <div class="ava-photo">
+                <img [src]="opt.photoUrl">
+              </div>
+              <ion-card-content class="price">
+                <ion-label>
+                  <p>{{opt.option}}</p>
+                </ion-label>
+              </ion-card-content>
+              <ion-button size="small" color="success" expand="block" (click)="addOpt(opt)">
+                Add
+              </ion-button>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <!--        <ion-button expand="block" fill="solid" size="small" color="light" (click)="menuEditPage()">edit</ion-button>-->
+  </div>
+</ion-content>
+

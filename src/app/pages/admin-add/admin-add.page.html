@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Adding Manager</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" size="small" color="dark" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <ion-card *ngIf="showRoles === false" class="crd">
+      <ion-title class="vfy-header">
+        Verify manager's email
+      </ion-title>
+      <form (ngSubmit)="checkEmail()">
+        <ion-item>
+          <ion-input type="email" placeholder="type email" [formControl]="email"></ion-input>
+
+          <ion-button size="small" fill="solid" color="warning" [disabled]="!email.valid"
+                      (click)="checkEmail()">Verify
+          </ion-button>
+        </ion-item>
+        <span *ngIf="email.hasError('required') && email.touched" style="color:red;font-size: 12px">
+                  Sorry, proper email is required!
+                </span>
+      </form>
+    </ion-card>
+    <ion-card *ngIf="showRoles === true" class="crd">
+      <div class="user-info">
+        <ion-avatar>
+          <img [src]="user.firebase_pp">
+        </ion-avatar>
+      </div>
+      <div class="user-info">
+        <h3>{{user.name}}</h3>
+      </div>
+      <div class="user-info">
+        <p>{{user.email}}</p>
+      </div>
+      <ion-card-header>
+        Select Role
+      </ion-card-header>
+
+
+      <div>
+        <ion-list>
+          <ion-radio-group value=4 (ionChange)="radioHandler($event)">
+            <ion-item>
+              <ion-label>Owner</ion-label>
+              <ion-radio value="1"></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>General Manager</ion-label>
+              <ion-radio value=2></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Content Manager</ion-label>
+              <ion-radio value=3></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Service Manager</ion-label>
+              <ion-radio value=4></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+
+        <ion-button color="dark" expand=block type="submit" (click)="send()">Add</ion-button>
+      </div>
+
+    </ion-card>
+  </div>
+</ion-content>

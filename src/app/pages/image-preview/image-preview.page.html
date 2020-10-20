@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button slot="start" (click)="close()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      <ion-title>Upload Photo</ion-title>
+      <!--      <ion-back-button (click)="close()">-->
+      <!--        <ion-icon name="arrow-back"></ion-icon>-->
+      <!--      </ion-back-button>-->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--  <ion-grid>-->
+  <!--    <ion-row class="ion-align-items-center">-->
+  <!--      <ion-col class="ion-align-self-center">-->
+  <!--        <div class="form-group">-->
+  <!--          <p><b>Choose File</b></p>-->
+  <!--          <input type="file" name="image" accept="image/*" (change)="fileProgress($event)" />-->
+  <!--        </div>-->
+  <!--        <div *ngIf="fileUploadProgress">-->
+  <!--          Upload progress: {{ fileUploadProgress }}-->
+  <!--        </div>-->
+  <!--        <div class="image-preview mb-3" *ngIf="previewUrl">-->
+  <!--          <img [src]="previewUrl" height="400" />-->
+  <!--        </div>-->
+
+  <!--        <div class="mb-3" *ngIf="uploadedFilePath">-->
+  <!--          {{uploadedFilePath}}-->
+  <!--        </div>-->
+
+  <!--        <div class="form-group">-->
+  <!--          <button class="btn btn-primary"  (click)="onSubmit()">Submit</button>-->
+  <!--        </div>-->
+  <!--      </ion-col>-->
+  <!--    </ion-row>-->
+  <!--    <ion-row>-->
+  <!--      <ion-item>-->
+  <!--        <ion-input maxlength="100" placeholder="Description (optional)" [(ngModel)]='description'></ion-input>-->
+  <!--      </ion-item>-->
+  <!--    </ion-row>-->
+  <!--    <ion-row>-->
+  <!--      <ion-button  color="dark" expand="block" class="submit" type="submit" (click)="onSubmit()">Submit</ion-button>-->
+  <!--    </ion-row>-->
+  <!--  </ion-grid>-->
+  <ion-list>
+    <ion-item>
+      <!--      <ion-label position="fixed">Choose File</ion-label>-->
+      <input type="file" name="image" accept="image/*" (change)="fileProgress($event)" />
+    </ion-item>
+    <div *ngIf="previewUrl">
+      <img [src]="previewUrl" height="400" />
+    </div>
+    <ion-item>
+      <ion-input maxlength="100" placeholder="Description (optional)" [(ngModel)]='description'></ion-input>
+    </ion-item>
+    <ion-button  color="dark" expand="block" class="submit" type="submit" (click)="onSubmit()">Submit</ion-button>
+  </ion-list>
+</ion-content>

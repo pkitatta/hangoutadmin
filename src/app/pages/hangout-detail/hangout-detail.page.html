@@ -1,0 +1,259 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!--          <ion-back-button defaultHref="/dashboard"></ion-back-button>-->
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="hangInfo">{{hangInfo.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="body">
+  <div class="body-content">
+    <div class="covImg-div">
+      <img *ngIf="coverImage; else elseBlock" class="cov" tappable (click)="enlargeImage(coverImage, 'cover')" [src]="coverImage"
+           alt="loading.."
+           onerror="this.onerror=null;this.src='assets/eventsFallbackImage.jpg';">
+      <ion-avatar class="thumbImg-div">
+        <img *ngIf="thumbImage; else elseBlockThumb" tappable (click)="enlargeImage(thumbImage, 'hangoutthumb')" [src]="thumbImage" alt="loading.."
+             onerror="this.onerror=null;this.src='assets/eventsFallbackImage.jpg';">
+      </ion-avatar>
+
+      <ng-template #elseBlock>
+        <ion-card class="cov" tappable (click)="enlargeImage(coverImage, 'cover')">
+          <h3 id="elseBlock"><ion-icon name="camera"></ion-icon> Upload Image</h3>
+        </ion-card>
+      </ng-template>
+      <ng-template #elseBlockThumb>
+        <ion-card class="thumbImg-div" tappable (click)="enlargeImage(thumbImage, 'hangoutthumb')">
+          <div id="elseBlockThumb"><ion-icon name="camera"></ion-icon></div>
+        </ion-card>
+      </ng-template>
+    </div>
+    <ion-item-group>
+      <ion-item-divider>
+        <h2>Business Details</h2>
+      </ion-item-divider>
+      <div class="group-items" *ngIf="hangInfo">
+        <ion-item>
+          <h4>Basic</h4>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2>{{hangInfo.name}}</h2>
+            <p>{{hangInfo.street_address}}, {{hangInfo.town}},</p>
+            <p>{{hangInfo.city.name}}, {{hangInfo.city.country.name}}</p>
+          </ion-label>
+          <ion-label>
+            <h2>Currency</h2>
+            <p>{{hangInfo.currency_code}}</p>
+          </ion-label>
+          <ion-buttons *ngIf="adminLevel === 1" slot="end">
+            <ion-button fill="solid" size="small" color="light" (click)="goToEdit('hangout')">edit
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item>
+          <h4>Message Board</h4>
+        </ion-item>
+        <ion-item>
+          <ion-row>
+            <ion-col>
+              <p>{{hangInfo.message_board}}</p>
+            </ion-col>
+          </ion-row>
+          <ion-buttons *ngIf="adminLevel === 1 || adminLevel === 2 || adminLevel === 3" slot="end">
+            <ion-button fill="solid" size="small" color="light" (click)="goToEdit('message')">edit
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </div>
+      <div class="group-items">
+        <ion-item>
+          <h4>Theme & Business Hours</h4>
+        </ion-item>
+        <ion-item *ngIf="fbObj && !theme">
+          <p>You have not set you business hours/themes</p>
+          <ion-buttons slot="end">
+            <ion-button fill="solid" size="small" color="light" (click)="themePage()">Set</ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item *ngIf="fbObj && theme">
+          <ion-row>
+            <ion-col>
+              <p>Manage the opening and closing business time. Communicate any special theme night for
+                your hangout to your customers here.</p>
+            </ion-col>
+          </ion-row>
+          <ion-buttons slot="end">
+            <ion-button fill="solid" size="small" color="light" (click)="themePage()">edit</ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item *ngIf="!fbObj">
+          <p>Loading...</p>
+        </ion-item>
+      </div>
+
+      <!--            SERVICES SECTION-->
+      <ion-item-divider>
+        <h2>Service Section</h2>
+      </ion-item-divider>
+      <div class="group-items" *ngIf="adminLevel === 1 || adminLevel === 4 || adminLevel === 2">
+        <ion-item>
+          <h4>Services</h4>
+        </ion-item>
+        <ion-item *ngIf="fbObj && !services">
+          <p>You have not yet added any business services</p>
+          <ion-buttons slot="end">
+            <ion-button fill="solid" size="small" color="light" (click)="serviceCreationPage()">Set
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item *ngIf="fbObj && services">
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngFor="let service of servicesList" class="ion-align-self-center">
+                <ion-button expand="block" fill="solid" size="medium" color="plot-lite"
+                            (click)="servicePage(service)">{{service}}</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-buttons slot="end">
+            <ion-button fill="solid" size="small" color="light" (click)="serviceCreationPage()">edit
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item *ngIf="!fbObj">
+          <p>Loading...</p>
+        </ion-item>
+      </div>
+      <div class="group-items" *ngIf="adminLevel === 1 || adminLevel === 2">
+        <ion-item>
+          <h4>Staff</h4>
+        </ion-item>
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <p>Manage hangout staff. Add, remove or change staff roles.</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-buttons slot="end">
+            <ion-button fill="solid" size="small" color="light"
+                        routerLink="/dashboard/hangout-detail/{{hangIndex}}/admin/{{hangIndex}}">Manage
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </div>
+
+      <ion-item-divider>
+        <h2>Tickets and Coupons</h2>
+      </ion-item-divider>
+      <div class="group-items" *ngIf="adminLevel === 1 || adminLevel === 2">
+        <ion-list-header>
+          <h4>Complementary</h4>
+        </ion-list-header>
+        <ion-item>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <p>Manage Complementary tickets and Coupons.</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-buttons slot="end">
+            <ion-button fill="solid" size="small" color="light"
+                        routerLink="/dashboard/hangout-detail/{{hangIndex}}/tickets/{{hangIndex}}">Manage
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </div>
+
+      <ion-item-divider>
+        <h2>All Media</h2>
+      </ion-item-divider>
+      <div class="group-items" *ngIf="adminLevel === 1 || adminLevel === 2">
+
+        <!--Hangout Photos-->
+        <!--                <ion-list-header>-->
+        <!--                    <h4>Hangout Photos</h4>-->
+        <!--                </ion-list-header>-->
+        <!--                <ion-item>-->
+        <!--                    <ion-grid>-->
+        <!--                        <ion-row>-->
+        <!--                            <ion-col>-->
+        <!--                                <p>Manage hangout photos.</p>-->
+        <!--                            </ion-col>-->
+        <!--                        </ion-row>-->
+        <!--                    </ion-grid>-->
+        <!--                    <ion-buttons slot="end">-->
+        <!--                        <ion-button fill="solid" size="small" color="light"-->
+        <!--                                    routerLink="/dashboard/hangout-detail/{{hangIndex}}/tickets/{{hangIndex}}">Manage-->
+        <!--                        </ion-button>-->
+        <!--                    </ion-buttons>-->
+        <!--                </ion-item>-->
+
+        <!--                &lt;!&ndash;user photos&ndash;&gt;-->
+        <!--                <ion-list-header>-->
+        <!--                    <h4>User Photos</h4>-->
+        <!--                </ion-list-header>-->
+        <!--                <ion-item>-->
+        <!--                    <ion-grid>-->
+        <!--                        <ion-row>-->
+        <!--                            <ion-col>-->
+        <!--                                <p>Manage user photos.</p>-->
+        <!--                            </ion-col>-->
+        <!--                        </ion-row>-->
+        <!--                    </ion-grid>-->
+        <!--                    <ion-buttons slot="end">-->
+        <!--                        <ion-button fill="solid" size="small" color="light"-->
+        <!--                                    routerLink="/dashboard/hangout-detail/{{hangIndex}}/tickets/{{hangIndex}}">Manage-->
+        <!--                        </ion-button>-->
+        <!--                    </ion-buttons>-->
+        <!--                </ion-item>-->
+
+        <!--                <ion-list-header>-->
+        <!--                    <h4>Videos</h4>-->
+        <!--                </ion-list-header>-->
+        <!--                <ion-item>-->
+        <!--                    <ion-grid>-->
+        <!--                        <ion-row>-->
+        <!--                            <ion-col>-->
+        <!--                                <p>Manage all hangout videos.</p>-->
+        <!--                            </ion-col>-->
+        <!--                        </ion-row>-->
+        <!--                    </ion-grid>-->
+        <!--                    <ion-buttons slot="end">-->
+        <!--                        <ion-button fill="solid" size="small" color="light"-->
+        <!--                                    routerLink="/dashboard/hangout-detail/{{hangIndex}}/tickets/{{hangIndex}}">Manage-->
+        <!--                        </ion-button>-->
+        <!--                    </ion-buttons>-->
+        <!--                </ion-item>-->
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-card tappable class="media-cards" (click)="mediaPage('hangout')">
+                <p>Hangout photos</p>
+                <ion-icon name="camera"></ion-icon>
+              </ion-card>
+            </ion-col>
+            <ion-col>
+              <ion-card tappable class="media-cards" (click)="mediaPage('user')">
+                <p>User photos</p>
+                <ion-icon name="camera"></ion-icon>
+              </ion-card>
+            </ion-col>
+            <ion-col>
+              <ion-card tappable class="media-cards" (click)="mediaPage('video')">
+                <p>videos</p>
+                <ion-icon name="videocam"></ion-icon>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-item-group>
+  </div>
+</ion-content>

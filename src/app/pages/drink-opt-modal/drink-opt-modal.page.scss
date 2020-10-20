@@ -1,0 +1,63 @@
+.body {
+  position: relative;
+}
+.body-content {
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+}
+.my-card {
+  border-radius: 15px;
+  color: #180018;
+  max-width: 500px;
+  margin-right: auto;
+  margin-left: auto;
+  //height:300px;
+  -webkit-border-radius: 15px;
+}
+.my-opt-card {
+  //border-radius: 15px;
+  color: #180018;
+  width: 150px;
+  //height:250px;
+  //-webkit-border-radius: 15px;
+}
+.ava-photo {
+  align-items: center;
+  object-fit: contain;
+  img{
+    margin-right: auto;
+    margin-left: auto;
+    height: 80px;
+    display: block;
+    //object-fit: contain;
+  }
+}
+.imageCards {
+  max-width: 500px;
+  margin: auto;
+  object-fit: contain;
+  align-items: center;
+  -webkit-border-radius: 0px;
+  background-color: #443266;
+}
+.menuImg{
+  //width: 100%;
+  height: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  //object-fit: cover;
+  display: block;
+}
+.menuTitle{
+  margin-bottom: 20px;
+}
+.menuDesc{
+  margin-bottom: 40px;
+}
+.price{
+  margin-right: 5px;
+}
+.editIcon{
+  font-size: 12px;
+}

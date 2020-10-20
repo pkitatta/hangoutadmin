@@ -182,8 +182,6 @@
     --ion-toolbar-background: #0d0d0d;
 
     --ion-item-background: #000000;
-
-    --ion-card-background: #1c1c1d;
   }
 
 
@@ -226,7 +224,112 @@
     --ion-toolbar-background: #1f1f1f;
 
     --ion-tab-bar-background: #1f1f1f;
-
-    --ion-card-background: #1e1e1e;
   }
+}
+
+// Plotavenue css
+  :root {
+    --ion-color-plot-dark: #180018;
+    --ion-color-plot-dark-rgb: 24,0,24;
+    --ion-color-plot-dark-contrast: #ffffff;
+    --ion-color-plot-dark-contrast-rgb: 255,255,255;
+    --ion-color-plot-dark-shade: #150015;
+    --ion-color-plot-dark-tint: #2f1a2f;
+
+    --ion-color-plot-lite: #443266;
+    --ion-color-plot-lite-rgb: 68,50,102;
+    --ion-color-plot-lite-contrast: #ffffff;
+    --ion-color-plot-lite-contrast-rgb: 255,255,255;
+    --ion-color-plot-lite-shade: #3c2c5a;
+    --ion-color-plot-lite-tint: #574775;
+
+    --ion-color-chat-right-bg: #f3f3f3;
+    --ion-color-chat-right-bg-rgb: 243,243,243;
+    --ion-color-chat-right-bg-contrast: #000000;
+    --ion-color-chat-right-bg-contrast-rgb: 0,0,0;
+    --ion-color-chat-right-bg-shade: #d6d6d6;
+    --ion-color-chat-right-bg-tint: #f4f4f4;
+
+    --ion-color-chat-right-color: #9a5ddd;
+    --ion-color-chat-right-color-rgb: 154,93,221;
+    --ion-color-chat-right-color-contrast: #ffffff;
+    --ion-color-chat-right-color-contrast-rgb: 255,255,255;
+    --ion-color-chat-right-color-shade: #8852c2;
+    --ion-color-chat-right-color-tint: #a46de0;
+
+    --ion-color-chat-left-bg: #03A9F4;
+    --ion-color-chat-left-bg-rgb: 3,169,244;
+    --ion-color-chat-left-bg-contrast: #ffffff;
+    --ion-color-chat-left-bg-contrast-rgb: 255,255,255;
+    --ion-color-chat-left-bg-shade: #0395d7;
+    --ion-color-chat-left-bg-tint: #1cb2f5;
+
+    --ion-color-chat-left-color: #f4f4f4;
+    --ion-color-chat-left-color-rgb: 244,244,244;
+    --ion-color-chat-left-color-contrast: #000000;
+    --ion-color-chat-left-color-contrast-rgb: 0,0,0;
+    --ion-color-chat-left-color-shade: #d7d7d7;
+    --ion-color-chat-left-color-tint: #f5f5f5;
+
+    --ion-color-toolbar-background: #180018;
+    --ion-color-toolbar-background-rgb: 24,0,24;
+    --ion-color-toolbar-background-contrast: #ffffff;
+    --ion-color-toolbar-background-contrast-rgb: 255,255,255;
+    --ion-color-toolbar-background-shade: #150015;
+    --ion-color-toolbar-background-tint: #2f1a2f;
+
+    --ion-color-gold-l: #fff000;
+    --ion-color-gold-l-rgb: 255,240,0;
+    --ion-color-gold-l-contrast: #000000;
+    --ion-color-gold-l-contrast-rgb: 0,0,0;
+    --ion-color-gold-l-shade: #e0d300;
+    --ion-color-gold-l-tint: #fff21a;
+
+    --ion-color-gold-d: #c69439;
+    --ion-color-gold-d-rgb: 198,148,57;
+    --ion-color-gold-d-contrast: #000000;
+    --ion-color-gold-d-contrast-rgb: 0,0,0;
+    --ion-color-gold-d-shade: #ae8232;
+    --ion-color-gold-d-tint: #cc9f4d;
+
+    --ion-color-badge: #9a5ddd;
+    --ion-color-badge-rgb: 154,93,221;
+    --ion-color-badge-contrast: #ffffff;
+    --ion-color-badge-contrast-rgb: 255,255,255;
+    --ion-color-badge-shade: #8852c2;
+    --ion-color-badge-tint: #a46de0;
+
+    --ion-color-btn-yellow: #fdc70f;
+    --ion-color-btn-yellow-rgb: 253,199,15;
+    --ion-color-btn-yellow-contrast: #000000;
+    --ion-color-btn-yellow-contrast-rgb: 0,0,0;
+    --ion-color-btn-yellow-shade: #dfaf0d;
+    --ion-color-btn-yellow-tint: #fdcd27;
+  }
+
+.ion-color-plot-dark {
+  --ion-color-base: var(--ion-color-plot-dark);
+  --ion-color-base-rgb: var(--ion-color-plot-dark-rgb);
+  --ion-color-contrast: var(--ion-color-plot-dark-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-plot-dark-contrast-rgb);
+  --ion-color-shade: var(--ion-color-plot-dark-shade);
+  --ion-color-tint: var(--ion-color-plot-dark-tint);
+}
+
+.ion-color-plot-lite {
+  --ion-color-base: var(--ion-color-plot-lite);
+  --ion-color-base-rgb: var(--ion-color-plot-lite-rgb);
+  --ion-color-contrast: var(--ion-color-plot-lite-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-plot-lite-contrast-rgb);
+  --ion-color-shade: var(--ion-color-plot-lite-shade);
+  --ion-color-tint: var(--ion-color-plot-lite-tint);
+}
+
+.ion-color-chat-right-bg {
+  --ion-color-base: var(--ion-color-chat-right-bg);
+  --ion-color-base-rgb: var(--ion-color-chat-right-bg-rgb);
+  --ion-color-contrast: var(--ion-color-chat-right-bg-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-chat-right-bg-contrast-rgb);
+  --ion-color-shade: var(--ion-color-chat-right-bg-shade);
+  --ion-color-tint: var(--ion-color-chat-right-bg-tint);
 }

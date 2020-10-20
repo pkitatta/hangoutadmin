@@ -1,0 +1,14 @@
+ion-content {
+  --background: #000000;
+  object-fit: contain;
+  align-items: center;
+  .cropper {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    //margin: auto;
+  }
+}
+ion-header {
+  --color: #222;
+}

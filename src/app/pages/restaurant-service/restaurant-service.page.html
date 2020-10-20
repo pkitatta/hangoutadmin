@@ -1,0 +1,180 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!--            <ion-back-button routerLink=""></ion-back-button>-->
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Restaurant Service</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="menu">
+      <ion-label>Menu</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="orders">
+      <ion-label>
+        Orders
+        <ion-badge *ngIf="orderNot > 0" color="danger">{{orderNot}}</ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="delivered">
+      <ion-label>
+        Delivered
+        <ion-badge *ngIf="delNot > 0" color="dark">{{delNot}}</ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="receipts">
+      <ion-label>Receipts</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="segment">
+    <div *ngSwitchCase="'menu'">
+      <ion-item-group *ngFor="let item of menuList| async | groupByCategory:'cat'">
+        <ion-item-divider class="date-header" sticky>
+          <ion-label>
+            {{item.key}}
+          </ion-label>
+        </ion-item-divider>
+        <ion-list>
+          <ion-item button *ngFor="let menu of item.value" (click)="menuDetail(menu)">
+            <ion-avatar slot="start">
+              <img [src]="menu.photoUrl">
+            </ion-avatar>
+            <ion-label>
+              <h4>{{menu.name}}</h4>
+              <!--                            <p>{{menu.description}}</p>-->
+            </ion-label>
+            <div slot="end">
+              <p>{{menu.price}}</p>
+            </div>
+            <ion-icon slot="end" color="success" *ngIf="menu.available" name="checkmark-circle-outline"></ion-icon>
+            <ion-icon slot="end" color="danger" *ngIf="!menu.available" name="close-circle-outline"></ion-icon>
+          </ion-item>
+        </ion-list>
+      </ion-item-group>
+      <!-- fab placed to the bottom end -->
+      <!--            <ion-fab vertical="bottom" horizontal="end" slot="fixed">-->
+      <!--                <ion-fab-button color="plot-lite" (click)="addMeal()">-->
+      <!--                    <ion-icon name="add"></ion-icon>-->
+      <!--                </ion-fab-button>-->
+      <!--            </ion-fab>-->
+    </div>
+
+    <div *ngSwitchCase="'orders'">
+      <ion-list>
+        <ion-item button *ngFor="let order of orderList" (click)="orderDetail(order,'orders')">
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="2">
+                <ion-card class="table-card">
+                  <h1>{{order.tableNumber}}</h1>
+                </ion-card>
+              </ion-col>
+              <ion-col size="2">
+                <ion-label><p>By {{order.orderBy.username}}</p></ion-label>
+              </ion-col>
+              <ion-col size="6">
+                <ion-label *ngFor="let i of order.order"><p><b>{{i['qty']}} {{i['mealName']}}, </b></p></ion-label>
+              </ion-col>
+              <ion-col size="2" class="cancel-Btn">
+                <ion-label *ngIf="!order.canceled"><p>{{order.orderTime | date: 'hh:mm a'}}</p></ion-label>
+                <ion-button *ngIf="order.canceled" fill="solid" size="small" color="warning">CANCELED!</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngSwitchCase="'delivered'">
+      <ion-item-group *ngFor="let item of deliveredList | groupByCategory:'tableNumber'">
+        <ion-item-divider class="date-header" sticky>
+          <ion-item>
+            <ion-row>
+              <ion-col></ion-col>
+              <ion-col>
+                <ion-card class="table-card-two">
+                  <h1>{{item.key}}</h1>
+                </ion-card>
+              </ion-col>
+              <ion-col></ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-item-divider>
+        <ion-list>
+          <ion-item button *ngFor="let order of item.value" (click)="orderDetail(order,'delivered')">
+            <ion-grid>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="2">
+                  <p>By {{order.orderBy.username}}</p>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label *ngFor="let i of order.order"><h3>{{i['qty']}} {{i['mealName']}}, </h3></ion-label>
+                </ion-col>
+                <!--                                <ion-col size="2" class="cancel-Btn">-->
+                <!--                                    <ion-label>{{order.orderTime | date: 'hh:mm a'}}</ion-label>-->
+                <!--                                </ion-col>-->
+                <ion-col size="2">
+                  <ion-label *ngIf="!order.canceled"><p>{{order.orderTime | date: 'hh:mm a'}}</p></ion-label>
+                  <!--                                    <ion-button *ngIf="!order.canceled" fill="solid" size="small" color="warning">Cancel Order</ion-button>-->
+                  <ion-button *ngIf="order.canceled" fill="solid" size="small" color="dark">CANCELED!</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+      </ion-item-group>
+    </div>
+    <div *ngSwitchCase="'receipts'">
+      <ion-item-group *ngFor="let item of receiptList | groupByCategory:'tableNumber'">
+        <ion-item-divider class="date-header" sticky>
+          <ion-item>
+            <ion-row>
+              <ion-col></ion-col>
+              <ion-col>
+                <ion-card class="table-card-two">
+                  <h1>{{item.key}}</h1>
+                </ion-card>
+              </ion-col>
+              <ion-col></ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-item-divider>
+        <ion-list>
+          <ion-item button *ngFor="let order of item.value" (click)="orderDetail(order,'receipts')">
+            <ion-grid>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="2">
+                  <p>By {{order.orderBy.username}}</p>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-label *ngFor="let i of order.order"><h3>{{i['qty']}} {{i['drinkName']}}, </h3></ion-label>
+                </ion-col>
+                <!--                <ion-col size="2" class="cancel-Btn">-->
+                <!--                  <ion-content>{{order.orderTime | date: 'hh:mm a'}}</ion-content>-->
+                <!--                </ion-col>-->
+                <ion-col size="2">
+                  <ion-label *ngIf="!order.canceled">
+                    <p>{{order.settledTime | FullDateMilli}}</p>
+                    <p>{{order.settledTime | date: 'hh:mm a'}}</p>
+                  </ion-label>
+                </ion-col>
+                <ion-col>
+                  <ion-label *ngIf="order.settled" [color]="order.paymentMethod !== 'none' ? 'dark' : 'danger'">{{order.paymentMethod}}</ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+      </ion-item-group>
+    </div>
+  </div>
+
+  <!-- fab placed to the bottom end -->
+  <ion-fab *ngIf="fab === 'menu'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="plot-lite" (click)="addMeal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

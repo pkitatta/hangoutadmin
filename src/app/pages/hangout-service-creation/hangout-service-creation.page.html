@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add or Remove Service</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" size="small" color="dark" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="body">
+  <div class="body-content">
+    <ion-item *ngFor="let service of this.servicesList">
+      <ion-icon *ngIf='service === "hotel"' name="business-outline" slot="start"></ion-icon>
+      <ion-icon *ngIf='service === "hotel"' name="bed-outline" slot="start"></ion-icon>
+
+      <ion-icon *ngIf='service === "restaurant"' name="restaurant-outline" slot="start"></ion-icon>
+      <ion-icon *ngIf='service === "restaurant"' name="fast-food-outline" slot="start"></ion-icon>
+
+      <ion-icon *ngIf='service === "bar"' name="beer-outline" slot="start"></ion-icon>
+      <ion-icon *ngIf='service === "bar"' name="wine-outline" slot="start"></ion-icon>
+      <ion-label>
+        {{service | titlecase}} Services
+      </ion-label>
+      <ion-buttons>
+        <!--        <ion-button fill="solid" size="small" color="light" (click)="addService('hotel')">-->
+        <!--          Add-->
+        <!--        </ion-button>-->
+        <ion-button shape="round" fill="solid" size="small" color="danger" (click)="removeService(service)">
+          Remove
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+
+    <div class="lower-sec">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-align-self-center">
+            <ion-button shape="round" fill="outline" size="small" color="plot-lite" (click)="addService('restaurant')">
+              Restaurant
+            </ion-button>
+          </ion-col>
+          <ion-col class="ion-align-self-center">
+            <ion-button shape="round" fill="outline" size="small" color="plot-lite" (click)="addService('bar')">
+              Bar
+            </ion-button>
+          </ion-col>
+          <ion-col class="ion-align-self-center">
+            <ion-button shape="round" fill="outline" size="small" color="plot-lite" (click)="addService('hotel')">
+              Hotel
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

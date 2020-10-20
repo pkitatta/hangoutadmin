@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar color="plot-lite">
+    <ion-title>Edit Ticket</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" size="small" color="light" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formData" (ngSubmit)="submit()">
+    <ion-item [ngClass]="{'error-border':!formData.controls.ticketId.valid && formData.controls.ticketId.touched}">
+      <ion-label class="labels" position="stacked">Type</ion-label>
+      <ion-select formControlName="ticketId" okText="Okay" cancelText="Dismiss" placeholder="Choose Category">
+        <ion-select-option *ngFor="let comp of compList" [value]=comp.id>{{comp.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <span *ngIf="formData.controls.ticketId.hasError('required') && formData.controls.ticketId.touched" style="color:red;font-size: 12px">
+      Sorry, field category is required!
+    </span>
+    <ion-item [ngClass]="{'error-border':!formData.controls.title.valid && formData.controls.title.touched}">
+      <ion-label class="labels" position="stacked">Title</ion-label>
+      <ion-input type="text" formControlName="title" placeholder="(Optional)"></ion-input>
+    </ion-item>
+    <span *ngIf="formData.controls.title.hasError('required') && formData.controls.title.touched" style="color:red;font-size: 12px">
+      Sorry, field title is required!
+    </span>
+    <div formGroupName="dates">
+      <ion-item button [ngClass]="{'error-border':!formData.get(['dates','start_date_time']).valid && formData.get(['dates','start_date_time']).touched}">
+        <ion-icon name="calendar" slot="start"></ion-icon>
+        <ion-icon name="time" slot="start"></ion-icon>
+        <ion-datetime display-format="MMM DD, YYYY HH:mm" pickerFormat="YYYY-MM-DDTHH:mm" min="{{minDate | date: 'yyyy-MM-dd'}}" formControlName="start_date_time" placeholder="Start Date and Time" [(ngModel)]="plotStartTime"></ion-datetime>
+      </ion-item>
+      <span *ngIf="formData.get(['dates','start_date_time']).hasError('required') && formData.get(['dates','start_date_time']).touched" style="color:red;font-size: 12px" padding-left>
+      Sorry, event date is required!
+    </span>
+
+      <ion-item button [ngClass]="{'error-border':!formData.get(['dates','end_date_time']).valid && formData.get(['dates','end_date_time']).touched}">
+        <ion-icon name="calendar" slot="start"></ion-icon>
+        <ion-icon name="time" slot="start"></ion-icon>
+        <ion-datetime display-format="MMM DD, YYYY HH:mm" pickerFormat="YYYY-MM-DDTHH:mm" min="{{plotStartTime | date: 'yyyy-MM-dd'}}" formControlName="end_date_time" placeholder="End Date and Time" [(ngModel)]="plotEndTime"></ion-datetime>
+      </ion-item>
+      <span *ngIf="formData.get(['dates','end_date_time']).hasError('required') && formData.get(['dates','end_date_time']).touched" style="color:red;font-size: 12px" padding-left>
+      Sorry, event time is required!
+    </span>
+      <p ion-text *ngIf="formData.get(['dates','start_date_time']).value > formData.get(['dates','end_date_time']).value && formData.get(['dates','end_date_time']).value != null" style="color:red;font-size: 12px">
+        End date has to be greater than start date!
+      </p>
+    </div>
+
+    <ion-button color="dark" expand="block" type="submit" [disabled]="!formData.valid">Update</ion-button>
+  </form>
+</ion-content>

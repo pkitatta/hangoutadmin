@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar *ngIf="showNavBar">
+    <ion-buttons>
+      <ion-button slot="start" (click)="close()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="type == 'cover' || type == 'hangoutthumb'" style="margin-right: 20px;" (click)="takePicture()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="type == 'admin' || type == 'cover' || type == 'hangoutthumb'" color="red" icon-only (click)="deletePhoto($event)" >
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <img *ngIf="type === 'cover'" (click)="toggleNavBar()" tappable [src]="image"/>
+  <img *ngIf="type === 'admin'" (click)="toggleNavBar()" tappable [src]="image"/>
+  <img *ngIf="type === 'user'" (click)="toggleNavBar()" tappable [src]="image"/>
+  <img class="thumb" *ngIf="type === 'hangoutthumb'" (click)="toggleNavBar()" tappable [src]="image" />
+</ion-content>
+
+<!--<div class="inner-content">-->
+<!--  <ion-header>-->
+<!--    <ion-toolbar *ngIf="showNavBar">-->
+<!--      <ion-buttons>-->
+<!--        <ion-button slot="start">-->
+<!--          <ion-icon name="arrow-back"></ion-icon>-->
+<!--        </ion-button>-->
+<!--      </ion-buttons>-->
+<!--      <ion-buttons slot="end">-->
+<!--        <ion-button style="margin-right: 20px;" (click)="takePicture()">-->
+<!--          <ion-icon name="camera"></ion-icon>-->
+<!--        </ion-button>-->
+<!--        <ion-button color="red" icon-only (click)="deletePhoto($event)" >-->
+<!--          <ion-icon name="trash"></ion-icon>-->
+<!--        </ion-button>-->
+<!--      </ion-buttons>-->
+<!--    </ion-toolbar>-->
+<!--  </ion-header>-->
+
+<!--  <div (click)="toggleNavBar()" tappable class="img-div">-->
+<!--    <img [src]="image" onerror="this.onerror=null;this.src='assets/images/eventsFallbackImage.jpg'"/>-->
+<!--  </div>-->
+<!--  <ion-footer>-->
+<!--    <p class="appname">Plotavenue</p>-->
+<!--  </ion-footer>-->
+<!--</div>-->

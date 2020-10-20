@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>tickets</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="comps">
+      <ion-label>Comps</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="coupons">
+      <ion-label>
+        Coupons
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="tickets">
+      <ion-label>
+        Tickets
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="segment">
+    <div *ngSwitchCase="'comps'">
+      <ion-list *ngIf="compCollection && compCollection.length > 0">
+        <ion-item *ngFor="let comp of compCollection; index as i">
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="1">
+                <ion-card class="table-card">
+                  <!--                  <h1>{{order.tableNumber}}</h1>-->
+                </ion-card>
+              </ion-col>
+              <ion-col size="3">
+                <ion-label>
+                  <h4>{{comp.title}}</h4>
+                </ion-label>
+              </ion-col>
+              <ion-col size="1">
+                <ion-label>
+                  <h4>{{comp.issued}}</h4>
+                </ion-label>
+              </ion-col>
+              <ion-col size="1">
+                <ion-label>
+                  <h4>{{comp.remaining}}</h4>
+                </ion-label>
+              </ion-col>
+              <ion-col size="2">
+                <ion-label>
+                  <p>{{comp.start_date_time | date: 'h:mm a'}}</p>
+                  <p>{{comp.start_date_time | date: 'd MMM, y'}}</p>
+                </ion-label>
+              </ion-col>
+              <ion-col size="2">
+                <ion-label>
+                  <p>{{comp.end_date_time | date: 'h:mm a'}}</p>
+                  <p>{{comp.end_date_time | date: 'd MMM, y'}}</p>
+                </ion-label>
+              </ion-col>
+              <ion-col size="1" class="cancel-Btn" *ngIf="!comp.deleted_at">
+                <ion-button fill="solid" size="small" color="warning" (click)="compEdit(comp,i)">Edit</ion-button>
+              </ion-col>
+              <ion-col size="1" class="cancel-Btn" *ngIf="!comp.deleted_at">
+                <ion-button fill="solid" size="small" color="warning" (click)="compCancel(comp,i)">Cancel</ion-button>
+              </ion-col>
+              <ion-col size="1" *ngIf="comp.deleted_at">
+                <ion-label>
+                  <p>CANCELED</p>
+                </ion-label>
+              </ion-col>
+              <ion-col size="1" class="cancel-Btn" *ngIf="comp.deleted_at">
+                <ion-button fill="solid" size="small" color="warning" (click)="compRestore(comp,i)">Restore</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+      <!-- fab placed to the bottom end -->
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="plot-lite" (click)="addComp()">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <div *ngSwitchCase="'coupons'">
+      Coming Soon
+    </div>
+    <div *ngSwitchCase="'tickets'">
+      Coming Soon
+    </div>
+  </div>
+</ion-content>

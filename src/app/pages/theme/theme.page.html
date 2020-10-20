@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>theme</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" size="small" color="dark" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="cont-mod">
+    <ion-item>
+      <ion-col>
+        <h6>Day of Week</h6>
+      </ion-col>
+      <ion-col>
+        <h6>Theme</h6>
+      </ion-col>
+      <ion-col>
+        <h6>Hours</h6>
+      </ion-col>
+      <ion-col>
+        <h6>Entry</h6>
+      </ion-col>
+      <ion-col>
+        <h6>Action</h6>
+      </ion-col>
+    </ion-item>
+    <ion-item *ngFor="let theme of themeList | async">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <p><b>{{theme.day | titlecase }}</b></p>
+          </ion-col>
+          <ion-col>
+            <p>{{theme.description ? theme.description : '-'}}</p>
+          </ion-col>
+          <ion-col>
+            <p>{{theme.start ? theme.start : '__'}} - {{theme.end ? theme.end : '__'}}</p>
+          </ion-col>
+          <ion-col>
+            <p>{{theme.entry ? theme.entry : theme.entry == 0 ? 'Free' : '-'}}</p>
+          </ion-col>
+          <ion-col>
+            <ion-button fill="solid" size="small" color="light" (click)="themeEditPage(theme)">edit</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </div>
+</ion-content>

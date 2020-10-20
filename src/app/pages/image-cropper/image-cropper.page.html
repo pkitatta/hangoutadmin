@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      <ion-button color="secondary" fill="outline" (click)="uploadImg()">
+        Done
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <input type="file" accept="image/x-png,image/jpeg,image/gif" (change)="fileChangeEvent($event)" />
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="inner-img-content">
+    <div class="cropper-div">
+      <image-cropper class="cropper"
+                     [imageChangedEvent]="imageChangedEvent"
+                     [maintainAspectRatio]="true"
+                     [aspectRatio]="1 / 1"
+                     format="jpeg"
+                     imageQuality="75"
+                     (imageCropped)="imageCropped($event)"
+                     (imageLoaded)="imageLoaded()"
+                     (cropperReady)="cropperReady()"
+                     (loadImageFailed)="loadImageFailed()"
+      ></image-cropper>
+    </div>
+
+    <!--  <img [src]="croppedImage" />-->
+  </div>
+</ion-content>

@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{type | titlecase}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="hangout">
+      <ion-label>
+        Hangout
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="user">
+      <ion-label>
+        User
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="video">
+      <ion-label>
+        Video
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segment">
+    <div *ngSwitchCase="'hangout'">
+      <ion-item-group *ngFor="let item of hangPhotoList | MediaGroup:'photo_time'">
+        <ion-item-divider class="date-header" sticky>
+          <ion-label>
+            {{item.key | FullDateMilli}}
+          </ion-label>
+        </ion-item-divider>
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let photo of item.value">
+              <ion-card class="img-card" button (click)="enlargeImage(photo.photo, 'admin')">
+                <img [src]=photo.photo.thumbnail.thumb />
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item-group>
+      <!-- fab placed to the bottom end -->
+      <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+        <ion-fab-button color="plot-lite" (click)="addPhoto()">
+          <ion-icon name="push-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <div *ngSwitchCase="'user'">
+      <ion-item-group *ngFor="let item of userPhotoList | MediaGroup:'photo_time'">
+        <ion-item-divider class="date-header" sticky>
+          <ion-label>
+            {{item.key | FullDateMilli}}
+          </ion-label>
+        </ion-item-divider>
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let photo of item.value">
+              <ion-card class="img-card" button (click)="enlargeImage(photo.photo, 'user')">
+                <img [src]=photo.photo.thumbnail.thumb />
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item-group>
+      <!-- fab placed to the bottom end -->
+      <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+        <ion-fab-button color="plot-lite" (click)="addPhoto()">
+          <ion-icon name="push-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+    <div *ngSwitchCase="'video'">
+      <ion-item-group *ngFor="let item of videoList | MediaGroup:'video_time'">
+        <ion-item-divider class="date-header" sticky>
+          <ion-label>
+            {{item.key | FullDateMilli}}
+          </ion-label>
+        </ion-item-divider>
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let vid of item.value">
+              <ion-card class="vid-thumb" button (click)="enlargeVideo(vid.video, 'admin')">
+                <img [src]=vid.video.vthumb />
+                <ion-icon class="playBtn" name="play"></ion-icon>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item-group>
+      <!-- fab placed to the bottom end -->
+      <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+        <ion-fab-button color="plot-lite" (click)="addPhoto()">
+          <ion-icon name="push-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+  </div>
+</ion-content>

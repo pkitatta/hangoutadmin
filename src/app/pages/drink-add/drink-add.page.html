@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!--            <ion-back-button routerLink=""></ion-back-button>-->
+      <ion-back-button (click)="goBack()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Beverages List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-group *ngFor="let item of drinkList| async | groupByCategory:'type'">
+    <ion-item-divider class="date-header" sticky>
+      <ion-label>
+        {{item.key}}
+      </ion-label>
+    </ion-item-divider>
+    <ion-list>
+      <ion-item button *ngFor="let drink of item.value" (click)="drinkDetail(drink)">
+        <ion-avatar slot="start">
+          <img [src]="drink.photoUrl">
+        </ion-avatar>
+        <ion-label>
+          <h4>{{drink.name}}</h4>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-item-group>
+</ion-content>
+

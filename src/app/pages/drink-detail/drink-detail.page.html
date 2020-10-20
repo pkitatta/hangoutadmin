@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Drink</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngFor="let option of optList">
+    <ion-avatar>
+      <ion-img [src]="option.photoUrl"></ion-img>
+      <!--      <img [src]="option.photoUrl">-->
+    </ion-avatar>
+    <ion-label>{{option.option}}</ion-label>
+    <ion-checkbox slot="end" [(ngModel)]="option.isChecked"></ion-checkbox>
+  </ion-item>
+  <ion-button color="dark" expand=block (click)="addDrink()">Add</ion-button>
+</ion-content>

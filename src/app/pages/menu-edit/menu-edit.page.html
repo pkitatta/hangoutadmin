@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="plot-lite">
+    <ion-title>Menu Item Edit</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" size="small" color="light" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="formData" (ngSubmit)="submit()">
+    <ion-item [ngClass]="{'error-border':!formData.controls.cat.valid && formData.controls.cat.touched}">
+      <ion-label class="labels" position="stacked">Category</ion-label>
+      <ion-input type="text" formControlName="cat" placeholder="e.g. Appetiser, Dinner, Dessert e.t.c"></ion-input>
+    </ion-item>
+    <span *ngIf="formData.controls.cat.hasError('required') && formData.controls.cat.touched" style="color:red;font-size: 12px">
+      Sorry, field category is required!
+    </span>
+    <ion-item [ngClass]="{'error-border':!formData.controls.name.valid && formData.controls.name.touched}">
+      <ion-label class="labels" position="stacked">Name</ion-label>
+      <ion-input type="text" formControlName="name"></ion-input>
+    </ion-item>
+    <span *ngIf="formData.controls.name.hasError('required') && formData.controls.name.touched" style="color:red;font-size: 12px">
+      Sorry, field name is required!
+    </span>
+    <ion-item [ngClass]="{'error-border':!formData.controls.description.valid && formData.controls.description.touched}">
+      <ion-label class="labels" position="stacked">Description</ion-label>
+      <ion-textarea type="text" rows="6" formControlName="description"></ion-textarea>
+    </ion-item>
+    <span *ngIf="formData.controls.description.hasError('required') && formData.controls.description.touched" style="color:red;font-size: 12px">
+      Sorry, field name is required!
+    </span>
+    <ion-item [ngClass]="{'error-border':!formData.controls.price.valid && formData.controls.price.touched}">
+      <ion-label class="labels" position="stacked">Price</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>
+    <span *ngIf="formData.controls.price.hasError('required') && formData.controls.price.touched" style="color:red;font-size: 12px">
+      Sorry, field price is required!
+    </span>
+    <ion-item [ngClass]="{'error-border':!formData.controls.discountPrice.valid && formData.controls.discountPrice.touched}">
+      <ion-label class="labels" position="stacked">discountPrice</ion-label>
+      <ion-input type="number" formControlName="discountPrice"></ion-input>
+    </ion-item>
+    <span *ngIf="formData.controls.discountPrice.hasError('required') && formData.controls.discountPrice.touched" style="color:red;font-size: 12px">
+      Sorry, field discount price is incorrect!
+    </span>
+    <ion-item>
+      <ion-label>Available</ion-label>
+      <ion-checkbox slot="end" formControlName="available"></ion-checkbox>
+    </ion-item>
+
+    <ion-button color="dark" expand=block type="submit" [disabled]="!formData.valid">Add</ion-button>
+  </form>
+</ion-content>

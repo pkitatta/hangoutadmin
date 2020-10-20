@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar color="plot-lite">
+    <ion-title>Editing Hangout Info</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" size="small" color="light" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="type && type === 'hangout'">
+  <form [formGroup]="formData" (ngSubmit)="submit()">
+    <div class="plotCard">
+      <!--      <ion-list-header class="clist" no-lines>-->
+      <!--        Hangout Details-->
+      <!--      </ion-list-header>-->
+      <ion-item [ngClass]="{'error-border':!formData.controls.name.valid && formData.controls.name.touched}">
+        <ion-label class="labels" position="stacked">Hangout Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <span *ngIf="formData.controls.name.hasError('required') && formData.controls.name.touched"
+            style="color:red;font-size: 12px" padding-left>
+      Sorry, field name is required!
+    </span>
+
+      <ion-item
+              [ngClass]="{'error-border':!formData.controls.street_address.valid && formData.controls.street_address.touched}">
+        <ion-label class="labels" position="stacked">Street Address</ion-label>
+        <ion-input formControlName="street_address"></ion-input>
+      </ion-item>
+      <span *ngIf="formData.controls.street_address.hasError('required') && formData.controls.street_address.touched"
+            style="color:red;font-size: 12px" padding-left>
+      Sorry, street or road name is required!
+    </span>
+
+      <!--        <ion-item [ngClass]="{'error-border':!formData.controls.gps_cords.valid && formData.controls.gps_cords.touched}">-->
+      <!--            <ion-label class="labels" position="stacked">GPS Coordinates</ion-label>-->
+      <!--            <ion-input type="number" formControlName="gps_cords"></ion-input>-->
+      <!--        </ion-item>-->
+      <!--        <span *ngIf="formData.controls.gps_cords.hasError('required') && formData.controls.gps_cords.touched" style="color:red;font-size: 12px" padding-left>-->
+      <!--      Sorry, street or road name is required!-->
+      <!--    </span>-->
+
+      <ion-item [ngClass]="{'error-border':!formData.controls.town.valid && formData.controls.town.touched}">
+        <ion-label class="labels" position="stacked">Town</ion-label>
+        <ion-input type="text" formControlName="town"></ion-input>
+      </ion-item>
+      <span *ngIf="formData.controls.town.hasError('required') && formData.controls.town.touched"
+            style="color:red;font-size: 12px" padding-left>
+      Sorry, hangout town is required!
+    </span>
+
+      <ion-item
+              [ngClass]="{'error-border':!formData.controls.city_name.valid && formData.controls.city_name.touched}">
+        <ion-label class="labels" position="stacked">City</ion-label>
+        <ion-input formControlName="city_name" type="text" (keyup)=filter() [(ngModel)]=query></ion-input>
+      </ion-item>
+
+      <input type="hidden" formControlName="city_id" [ngModel]="cityId">
+
+      <div *ngIf="filteredList.length > 0">
+        <ion-list *ngFor="let city of filteredList">
+          <ion-item class="drop-down" (click)="select(city)">
+            {{city.name}}
+          </ion-item>
+        </ion-list>
+      </div>
+      <span *ngIf="formData.controls.city_name.hasError('required') && formData.controls.city_name.touched"
+            style="color:red;font-size: 12px" padding-left>
+      Sorry, your hangout city is required!
+    </span>
+
+      <ion-item
+              [ngClass]="{'error-border':!formData.controls.currency_code.valid && formData.controls.currency_code.touched}">
+        <ion-label class="labels" position="stacked">Currency Code</ion-label>
+        <ion-input formControlName="currency_code" type="text" (keyup)=filterCur()
+                   [(ngModel)]=queryCur></ion-input>
+      </ion-item>
+
+      <div *ngIf="curfilteredList.length > 0">
+        <ion-list *ngFor="let cur of curfilteredList">
+          <ion-item class="drop-down" (click)="selectCur(cur)">
+            {{cur.cur_code}}
+          </ion-item>
+        </ion-list>
+      </div>
+      <span *ngIf="formData.controls.city_name.hasError('required') && formData.controls.city_name.touched"
+            style="color:red;font-size: 12px" padding-left>
+      Sorry, your hangout city is required!
+    </span>
+
+    </div>
+
+    <ion-button color="dark" expand="block" class="submit" type="submit" [disabled]="!formData.valid">Update
+    </ion-button>
+  </form>
+</ion-content>
+<ion-content *ngIf="type && type === 'message'">
+  <form (ngSubmit)="submitMessage()">
+
+    <ion-item
+            [ngClass]="{'error-border':!messageBoard.valid && messageBoard.touched}">
+      <ion-label class="labels" position="stacked">Message</ion-label>
+      <ion-textarea rows="6" [formControl]="messageBoard"></ion-textarea>
+    </ion-item>
+    <span *ngIf="messageBoard.hasError('required') && messageBoard.touched"
+          style="color:red;font-size: 12px" padding-left>
+      Sorry, message has to be more than 2 and less than 300 characters!
+    </span>
+
+    <ion-button color="dark" expand="block" class="submit" type="submit" [disabled]="!messageBoard.valid">Update
+    </ion-button>
+  </form>
+</ion-content>

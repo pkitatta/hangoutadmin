@@ -1,0 +1,34 @@
+.tableNum{
+  background: #0c5460;
+  //margin: auto;
+  text-align: center;
+  border-radius: 10px;
+  height: 40px;
+}
+.table-card{
+  text-align: center;
+  border-radius: 50px;
+  background: #0c5460;
+  h1{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #ffffff;
+  }
+}
+.table-card-two{
+  width: 100px;
+  text-align: center;
+  border-radius: 50px;
+  background: #0c5460;
+  h1{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    color: #ffffff;
+  }
+}
+.cancel-Btn{
+  align-items: center;
+  ion-button{
+    text-transform: none;
+  }
+}

@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="plot-lite">
+    <ion-title>Order Detail</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" size="small" color="light" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="order-detail" *ngIf="order">
+    <div class="order-info">
+      <p>
+        By: {{order.orderBy.username}}
+      </p>
+      <p>
+        For: {{order.orderFor.username}}
+      </p>
+      <p>
+        Time: {{order.orderTime | date: 'hh:mm a'}}
+      </p>
+    </div>
+    <ion-list>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label>
+                Qty
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                Name
+              </ion-label>
+            </ion-col>
+            <ion-col *ngIf="section === 'bar'">
+              <ion-label>
+                Preference
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item *ngFor="let item of order.order">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label>
+                {{item['qty']}}
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                {{section === 'bar' ? item['drinkName'] : item['mealName']}}
+              </ion-label>
+            </ion-col>
+            <ion-col *ngIf="section === 'bar'">
+              <ion-label>
+                {{item['option']}}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-fab *ngIf="order" vertical="top" horizontal="center" edge slot="fixed">
+    <ion-fab-button color="plot-lite" class="cls-fab">
+      <h1>{{order.tableNumber}}</h1>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons *ngIf="order && tab !== 'receipts'" slot="start">
+      <ion-button *ngIf="!order.canceled" fill="outline" size="small" color="plot-lite" (click)="cancelOrder()">
+        Cancel Order
+      </ion-button>
+      <ion-button *ngIf="order.canceled" fill="outline" size="small" color="plot-lite" (click)="removeOrder()">
+        Remove from view
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="order && tab === 'orders'" slot="end">
+      <ion-button *ngIf="!order.canceled" fill="outline" size="small" color="plot-lite"
+                  (click)="sendToDelivered()">
+        Deliver
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="order && tab === 'delivered'" slot="end">
+      <ion-button fill="outline" size="small" color="plot-lite"
+                  (click)="settlement('cash')">
+        Cash Rept
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons *ngIf="order && tab === 'delivered'" slot="end">
+      <ion-button fill="outline" size="small" color="danger"
+                  (click)="settlement('none')">
+        Loss
+        <ion-icon slot="end" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

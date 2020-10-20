@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title *ngIf="theme">{{theme.day | titlecase}} theme and hours</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" size="small" color="dark" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="theme">
+    <form [formGroup]="formData" (ngSubmit)="submit()">
+      <ion-item [ngClass]="{'error-border':!formData.controls.description.valid && formData.controls.description.touched}">
+        <ion-label class="labels" position="stacked">Theme/Description</ion-label>
+        <ion-input type="text" formControlName="description"></ion-input>
+      </ion-item>
+      <span *ngIf="formData.controls.description.hasError('required') && formData.controls.description.touched" style="color:red;font-size: 12px" padding-left>
+      Sorry, field name is required!
+    </span>
+      <ion-item [ngClass]="{'error-border':!formData.controls.entry.valid && formData.controls.entry.touched}">
+        <ion-label class="labels" position="stacked">Entry price</ion-label>
+        <ion-input type="number" formControlName="entry"></ion-input>
+      </ion-item>
+      <span *ngIf="formData.controls.entry.hasError('required') && formData.controls.entry.touched" style="color:red;font-size: 12px" padding-left>
+      Sorry, field name is required!
+    </span>
+      <ion-item button [ngClass]="{'error-border':!formData.controls.start.valid && formData.controls.start.touched}">
+        <ion-icon name="time" slot="start"></ion-icon>
+        <ion-datetime pickerFormat="HH:mm" display-format="h:mm A" minuteValues="0,15,30,45" formControlName="start" placeholder="Opening Time"></ion-datetime>
+      </ion-item>
+      <ion-item button [ngClass]="{'error-border':!formData.controls.end.valid && formData.controls.end.touched}">
+        <ion-icon name="time" slot="start"></ion-icon>
+        <ion-datetime pickerFormat="HH:mm" display-format="h:mm A" minuteValues="0,15,30,45" formControlName="end" placeholder="Closing Time"></ion-datetime>
+      </ion-item>
+
+      <ion-button color="dark" expand=block type="submit" [disabled]="!formData.valid">Update</ion-button>
+    </form>
+  </div>
+</ion-content>

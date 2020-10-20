@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar color="plot-lite">
+    <ion-title>Menu Item</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="outline" size="small" color="light" (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+    <ion-card class="imageCards">
+      <div>
+        <img class="menuImg" tappable (click)="enlargeImage(coverImage)" [src]="coverImage" alt="loading..."
+             onerror="this.onerror=null;this.src='assets/eventsFallbackImage.jpg';">
+      </div>
+    </ion-card>
+    <!--        <div class="imageCards">-->
+    <!--            <img class="menuImg" tappable (click)="enlargeImage(coverImage)" [src]="coverImage" alt="loading..."-->
+    <!--                 onerror="this.onerror=null;this.src='assets/eventsFallbackImage.jpg';">-->
+    <!--        </div>-->
+    <ion-card class="my-card">
+      <ion-card-content>
+        <ion-card-title class="menuTitle">
+          {{menu.name}}
+        </ion-card-title>
+        <p class="menuDesc">{{menu.description}}</p>
+        <div class="price">
+          <p><b>Price: {{menu.price}}</b></p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button expand="block" fill="solid" size="small" color="light" (click)="menuEditPage()">edit</ion-button>
+  </div>
+</ion-content>
