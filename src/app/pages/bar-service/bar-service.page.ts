@@ -81,6 +81,7 @@ export class BarServicePage implements OnInit {
       // this.orderNot = order.length;
       this.orderList = [];
       this.deliveredList = [];
+      this.receiptList = [];
       order.forEach((ord) => {
         console.log('ord: ' + ord.section);
         if (ord.delivered === false) {

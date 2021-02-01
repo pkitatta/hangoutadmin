@@ -16,6 +16,9 @@
       <ion-icon *ngIf='service === "restaurant"' name="restaurant-outline" slot="start"></ion-icon>
       <ion-icon *ngIf='service === "restaurant"' name="fast-food-outline" slot="start"></ion-icon>
 
+      <ion-icon *ngIf='service === "takeaway"' name="restaurant-outline" slot="start"></ion-icon>
+      <ion-icon *ngIf='service === "takeaway"' name="location-outline" slot="start"></ion-icon>
+
       <ion-icon *ngIf='service === "bar"' name="beer-outline" slot="start"></ion-icon>
       <ion-icon *ngIf='service === "bar"' name="wine-outline" slot="start"></ion-icon>
       <ion-label>
@@ -37,6 +40,11 @@
           <ion-col class="ion-align-self-center">
             <ion-button shape="round" fill="outline" size="small" color="plot-lite" (click)="addService('restaurant')">
               Restaurant
+            </ion-button>
+          </ion-col>
+          <ion-col class="ion-align-self-center">
+            <ion-button shape="round" fill="outline" size="small" color="plot-lite" (click)="addService('takeaway')">
+              TakeAway
             </ion-button>
           </ion-col>
           <ion-col class="ion-align-self-center">

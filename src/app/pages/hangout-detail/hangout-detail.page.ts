@@ -168,6 +168,8 @@ export class HangoutDetailPage implements OnInit {
       this.navCtrl.navigateForward(['/dashboard/hangout-detail/' + this.hangIndex + '/bar-service/'  + this.hangIndex]);
     } else if (service === 'hotel') {
       this.navCtrl.navigateForward('/hotel-service');
+    } else if (service === 'takeaway') {
+      this.navCtrl.navigateForward(['/dashboard/hangout-detail/' + this.hangIndex + '/takeaway-service/'  + this.hangIndex]);
     }
   }
 

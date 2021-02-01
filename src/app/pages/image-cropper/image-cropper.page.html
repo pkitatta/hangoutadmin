@@ -21,6 +21,9 @@
                      [imageChangedEvent]="imageChangedEvent"
                      [maintainAspectRatio]="true"
                      [aspectRatio]="1 / 1"
+                     resizeToWidth = 1200
+                     resizeToHeight = 1200
+                     onlyScaleDown = true
                      format="jpeg"
                      imageQuality="75"
                      (imageCropped)="imageCropped($event)"

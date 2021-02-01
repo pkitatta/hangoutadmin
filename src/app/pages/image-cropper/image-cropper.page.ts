@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {ModalController, NavParams} from '@ionic/angular';
 import {LoadingProviderService} from '../../services/loading-provider.service';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
@@ -18,8 +18,8 @@ export class ImageCropperPage implements OnInit {
   showCropper = false;
   containWithinAspectRatio = false;
   imageURL: string;
-  hangoutId: any;
-  type: any;
+  @Input() type;
+  @Input() hangoutId;
   constructor(
       private imgService: ImageService,
       private modalController: ModalController,
@@ -51,7 +51,8 @@ export class ImageCropperPage implements OnInit {
     console.log('image: ' + this.croppedImage);
     const data = {
       hangoutId: this.hangoutId,
-      photo: this.croppedImage
+      photo: this.croppedImage,
+      type: this.type
     };
     await this.imgService.uploadCoverPhoto(data, this.type).subscribe((res: any) => {
       console.log(res);

@@ -22,9 +22,9 @@
         <ion-badge *ngIf="delNot > 0" color="dark">{{delNot}}</ion-badge>
       </ion-label>
     </ion-segment-button>
-    <ion-segment-button value="receipts">
-      <ion-label>Receipts</ion-label>
-    </ion-segment-button>
+<!--    <ion-segment-button value="receipts">-->
+<!--      <ion-label>Receipts</ion-label>-->
+<!--    </ion-segment-button>-->
   </ion-segment>
 </ion-header>
 
@@ -79,6 +79,7 @@
               </ion-col>
               <ion-col size="2" class="cancel-Btn">
                 <ion-label *ngIf="!order.canceled"><p>{{order.orderTime | date: 'hh:mm a'}}</p></ion-label>
+                <ion-button fill="solid" size="small" color="dark" *ngIf="!order.canceled && order.paymentMethod == 'cash'"><p>Cash Paid</p></ion-button>
                 <ion-button *ngIf="order.canceled" fill="solid" size="small" color="warning">CANCELED!</ion-button>
               </ion-col>
             </ion-row>
@@ -128,49 +129,49 @@
         </ion-list>
       </ion-item-group>
     </div>
-    <div *ngSwitchCase="'receipts'">
-      <ion-item-group *ngFor="let item of receiptList | groupByCategory:'tableNumber'">
-        <ion-item-divider class="date-header" sticky>
-          <ion-item>
-            <ion-row>
-              <ion-col></ion-col>
-              <ion-col>
-                <ion-card class="table-card-two">
-                  <h1>{{item.key}}</h1>
-                </ion-card>
-              </ion-col>
-              <ion-col></ion-col>
-            </ion-row>
-          </ion-item>
-        </ion-item-divider>
-        <ion-list>
-          <ion-item button *ngFor="let order of item.value" (click)="orderDetail(order,'receipts')">
-            <ion-grid>
-              <ion-row class="ion-align-items-center">
-                <ion-col size="2">
-                  <p>By {{order.orderBy.username}}</p>
-                </ion-col>
-                <ion-col size="6">
-                  <ion-label *ngFor="let i of order.order"><h3>{{i['qty']}} {{i['drinkName']}}, </h3></ion-label>
-                </ion-col>
-                <!--                <ion-col size="2" class="cancel-Btn">-->
-                <!--                  <ion-content>{{order.orderTime | date: 'hh:mm a'}}</ion-content>-->
-                <!--                </ion-col>-->
-                <ion-col size="2">
-                  <ion-label *ngIf="!order.canceled">
-                    <p>{{order.settledTime | FullDateMilli}}</p>
-                    <p>{{order.settledTime | date: 'hh:mm a'}}</p>
-                  </ion-label>
-                </ion-col>
-                <ion-col>
-                  <ion-label *ngIf="order.settled" [color]="order.paymentMethod !== 'none' ? 'dark' : 'danger'">{{order.paymentMethod}}</ion-label>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </ion-list>
-      </ion-item-group>
-    </div>
+<!--    <div *ngSwitchCase="'receipts'">-->
+<!--      <ion-item-group *ngFor="let item of receiptList | groupByCategory:'tableNumber'">-->
+<!--        <ion-item-divider class="date-header" sticky>-->
+<!--          <ion-item>-->
+<!--            <ion-row>-->
+<!--              <ion-col></ion-col>-->
+<!--              <ion-col>-->
+<!--                <ion-card class="table-card-two">-->
+<!--                  <h1>{{item.key}}</h1>-->
+<!--                </ion-card>-->
+<!--              </ion-col>-->
+<!--              <ion-col></ion-col>-->
+<!--            </ion-row>-->
+<!--          </ion-item>-->
+<!--        </ion-item-divider>-->
+<!--        <ion-list>-->
+<!--          <ion-item button *ngFor="let order of item.value" (click)="orderDetail(order,'receipts')">-->
+<!--            <ion-grid>-->
+<!--              <ion-row class="ion-align-items-center">-->
+<!--                <ion-col size="2">-->
+<!--                  <p>By {{order.orderBy.username}}</p>-->
+<!--                </ion-col>-->
+<!--                <ion-col size="6">-->
+<!--                  <ion-label *ngFor="let i of order.order"><h3>{{i['qty']}} {{i['drinkName']}}, </h3></ion-label>-->
+<!--                </ion-col>-->
+<!--                &lt;!&ndash;                <ion-col size="2" class="cancel-Btn">&ndash;&gt;-->
+<!--                &lt;!&ndash;                  <ion-content>{{order.orderTime | date: 'hh:mm a'}}</ion-content>&ndash;&gt;-->
+<!--                &lt;!&ndash;                </ion-col>&ndash;&gt;-->
+<!--                <ion-col size="2">-->
+<!--                  <ion-label *ngIf="!order.canceled">-->
+<!--                    <p>{{order.settledTime | FullDateMilli}}</p>-->
+<!--                    <p>{{order.settledTime | date: 'hh:mm a'}}</p>-->
+<!--                  </ion-label>-->
+<!--                </ion-col>-->
+<!--                <ion-col>-->
+<!--                  <ion-label *ngIf="order.settled" [color]="order.paymentMethod !== 'none' ? 'dark' : 'danger'">{{order.paymentMethod}}</ion-label>-->
+<!--                </ion-col>-->
+<!--              </ion-row>-->
+<!--            </ion-grid>-->
+<!--          </ion-item>-->
+<!--        </ion-list>-->
+<!--      </ion-item-group>-->
+<!--    </div>-->
   </div>
   <ion-fab *ngIf="fab === 'menu'" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="plot-lite" (click)="goToList()">

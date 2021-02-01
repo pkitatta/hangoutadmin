@@ -179,9 +179,8 @@ export class FirestoreService {
         //     .collectionGroup('orders', ref => ref.where('did', '==', did).where('section', '==', section).limit(20));
 
         return this.firestore
-            .collection('hangouts')
-            .doc(did)
             .collection<any>('orders', ref => ref
+                .where('hangoutId', '==', did)
                 .where('section', '==', section)
                 .where('confirmed', '==', true)
             );
@@ -192,9 +191,8 @@ export class FirestoreService {
         //     .collectionGroup('orders', ref => ref.where('did', '==', did).where('section', '==', section).limit(20));
 
         return this.firestore
-            .collection('hangouts')
-            .doc(did)
             .collection('orders', ref => ref
+                .where('hangoutId', '==', did)
                 .where('section', '==', section)
                 .where('confirmed', '==', true)
                 .where('delivered', '==', false)
@@ -204,9 +202,7 @@ export class FirestoreService {
     async sendToDelivered(did: string, odid: string) {
         console.log('hangout id : ' + did + ', odid: ' + odid);
         this.firestore
-            .collection('hangouts')
-            .doc(did)
-            .collection('orders')
+            .collection('orders', ref => ref.where('hangoutId', '==', did))
             .doc(odid)
             .update({
                 delivered: true,
@@ -214,24 +210,30 @@ export class FirestoreService {
             });
     }
 
+    async sendToEnroute(did: string, odid: string) {
+        console.log('hangout id : ' + did + ', odid: ' + odid);
+        this.firestore
+            .collection('orders', ref => ref.where('hangoutId', '==', did))
+            .doc(odid)
+            .update({
+                enroute: true,
+            });
+    }
+
     async cancelOrder(did: any, odid: any) {
         this.firestore
-            .collection('hangouts')
-            .doc(did)
-            .collection('orders')
+            .collection('orders', ref => ref.where('hangoutId', '==', did))
             .doc(odid)
             .update({
                 canceled: true,
                 canceledTime: Date.now().toString(),
-                canceledBy: 'hangout'
+                canceledBy: 'hangout(' + this.auth.token.username + ')'
             });
     }
 
     async removeOrder(did: any, odid: any) {
         this.firestore
-            .collection('hangouts')
-            .doc(did)
-            .collection('orders')
+            .collection('orders', ref => ref.where('hangoutId', '==', did))
             .doc(odid)
             .update({
                 section: 'deleted'
@@ -315,15 +317,13 @@ export class FirestoreService {
 
     async settleOrder(did: any, odid: any, settlement: string) {
         this.firestore
-            .collection('hangouts')
-            .doc(did)
-            .collection('orders')
+            .collection('orders', ref => ref.where('hangoutId', '==', did))
             .doc(odid)
             .update({
                 paymentMethod: settlement,
                 settled: true,
                 settledTime: Date.now().toString(),
-                settledBy: 'hangout(' + this.auth.token.token_type + ')'
+                settledBy: 'hangout(' + this.auth.token.username + ')'
             });
     }
 }

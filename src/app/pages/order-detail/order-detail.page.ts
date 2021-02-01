@@ -21,7 +21,7 @@ export class OrderDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Order: ' + this.order.odid);
+    console.log('Order: ' + this.order.order);
     this.orderItems = this.order.order;
   }
 
@@ -33,6 +33,11 @@ export class OrderDetailPage implements OnInit {
     await this.firestoreService.sendToDelivered(this.did, this.order.odid);
     await this.modalCtrl.dismiss();
   }
+
+    async sendToEnroute() {
+        await this.firestoreService.sendToEnroute(this.did, this.order.odid);
+        await this.modalCtrl.dismiss();
+    }
 
   async cancelOrder() {
     await this.firestoreService.cancelOrder(this.did, this.order.odid);
