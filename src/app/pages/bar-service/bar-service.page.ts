@@ -66,10 +66,10 @@ export class BarServicePage implements OnInit {
 
   getMenu() {
     this.menuList = this.firestoreService.getHangoutMenu(this.did, 'bar').valueChanges({ idField: 'mdid' });
-    console.log('menuLength: ' + this.menuList);
-    this.menuList.forEach((menu) => {
-      console.log('menu: ' + menu[0].name);
-    });
+    // console.log('menuLength: ' + this.menuList);
+    // this.menuList.forEach((menu) => {
+    //   console.log('menu: ' + menu[0].name);
+    // });
   }
 
   getOrderData() {

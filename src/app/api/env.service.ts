@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EnvService {
-  API_URL = 'https://devadmin.plotavenue.com/api/';
+  // Development url
+  // API_URL = 'https://devadmin.plotavenue.com/api/';
+  // Production url
+  API_URL = 'https://admin.plotavenue.com/api/';
   constructor() { }
 }

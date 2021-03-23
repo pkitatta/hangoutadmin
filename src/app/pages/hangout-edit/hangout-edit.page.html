@@ -32,6 +32,31 @@
       Sorry, street or road name is required!
     </span>
 
+    <ion-item>
+        <ion-label>
+            Category:
+        </ion-label>
+        <ion-select [value]="catName" (ionChange)="catName = $event.target.value">
+            <ion-select-option value="Bar">Bar</ion-select-option>
+            <ion-select-option value="Bar & Restaurant">Bar & Restaurant</ion-select-option>
+            <ion-select-option value="Beach">Beach</ion-select-option>
+            <ion-select-option value="Beach & Bar">Beach & Bar</ion-select-option>
+            <ion-select-option value="Beach & Bar & Restaurant">Beach & Bar & Restaurant</ion-select-option>
+            <ion-select-option value="Beach & Restaurant">Beach & Restaurant</ion-select-option>
+            <ion-select-option value="Club">Club</ion-select-option>
+            <ion-select-option value="Hotel">Hotel</ion-select-option>
+            <ion-select-option value="Hotel & Bar">Hotel & Bar</ion-select-option>
+            <ion-select-option value="Hotel & Bar & Restaurant">Hotel & Bar & Restaurant</ion-select-option>
+            <ion-select-option value="Hotel & Restaurant">Hotel & Restaurant</ion-select-option>
+            <ion-select-option value="Restaurant">Restaurant</ion-select-option>
+            <ion-select-option value="Sports">Sports</ion-select-option>
+            <ion-select-option value="Sports & Bar">Sports & Bar</ion-select-option>
+            <ion-select-option value="Sports & Bar & Restaurant">Sports & Bar & Restaurant</ion-select-option>
+            <ion-select-option value="Sports & Restaurant">Sports & Restaurant</ion-select-option>
+            <ion-select-option value="None">None</ion-select-option>
+        </ion-select>
+    </ion-item>
+
       <!--        <ion-item [ngClass]="{'error-border':!formData.controls.gps_cords.valid && formData.controls.gps_cords.touched}">-->
       <!--            <ion-label class="labels" position="stacked">GPS Coordinates</ion-label>-->
       <!--            <ion-input type="number" formControlName="gps_cords"></ion-input>-->
@@ -110,4 +135,50 @@
     <ion-button color="dark" expand="block" class="submit" type="submit" [disabled]="!messageBoard.valid">Update
     </ion-button>
   </form>
+</ion-content>
+
+<ion-content *ngIf="type && type === 'drink&entry'">
+    <form [formGroup]="basePrice" (ngSubmit)="submitBase()">
+
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-select [value]="itemName" (ionChange)="itemName = $event.target.value">
+                        <ion-select-option value="Beer Price">Beer Price</ion-select-option>
+                        <ion-select-option value="Food Price">Food Price</ion-select-option>
+                        <ion-select-option value="Drink Price">Drink Price</ion-select-option>
+                        <ion-select-option value="Snack Price">Snacks Price</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col [ngClass]="{'error-border':!basePrice.controls.item_price.valid && basePrice.touched}">
+                <ion-input type="number" min="0" formControlName="item_price"></ion-input>
+            </ion-col>
+        </ion-row>
+        <span *ngIf="basePrice.controls.item_price.hasError('required') && basePrice.controls.item_price.touched"
+              style="color:red;font-size: 12px" padding-left>
+      Required!
+    </span>
+
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-select [value]="entryName" (ionChange)="entryName = $event.target.value">
+                        <ion-select-option value="Entry Price">Entry Price</ion-select-option>
+                        <ion-select-option value="RSVP">RSVP</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col [ngClass]="{'error-border':!basePrice.controls.entry_price.valid && basePrice.touched}">
+                <ion-input type="number" min="0" formControlName="entry_price"></ion-input>
+            </ion-col>
+        </ion-row>
+        <span *ngIf="basePrice.controls.entry_price.hasError('required') && basePrice.controls.entry_price.touched"
+              style="color:red;font-size: 12px" padding-left>
+      Required!
+    </span>
+
+        <ion-button color="dark" expand="block" class="submit" type="submit" [disabled]="!basePrice.valid">Update
+        </ion-button>
+    </form>
 </ion-content>

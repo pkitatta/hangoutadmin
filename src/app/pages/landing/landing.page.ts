@@ -30,7 +30,6 @@ export class LandingPage implements OnInit {
         this.token = value;
         this.isLoggedIn = true;
         this.navCtrl.navigateRoot('/dashboard');
-        console.log('token loaded', this.token);
       }
     });
   }

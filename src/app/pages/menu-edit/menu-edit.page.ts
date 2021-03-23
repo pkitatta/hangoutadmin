@@ -13,8 +13,8 @@ export class MenuEditPage implements OnInit {
   public available = { val: 'Pepperoni', isChecked: true };
   formData = new FormGroup({
     cat: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
-    name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(500)]),
+    name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(2000)]),
     price: new FormControl('', [Validators.required, Validators.pattern('^((0(\\.\\d{1,2})?)|([1-9]\\d*(\\.\\d{1,2})?))$')]),
     discountPrice: new FormControl('', [Validators.pattern('^((0(\\.\\d{1,2})?)|([1-9]\\d*(\\.\\d{1,2})?))$')]),
     available: new FormControl(true, [Validators.required]),

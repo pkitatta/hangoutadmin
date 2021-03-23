@@ -50,7 +50,6 @@ export class HangoutDetailPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log('hangoutId', this.route.snapshot.paramMap.get('id'));
     this.hangIndex = this.route.snapshot.paramMap.get('id');
     this.getData();
   }
@@ -70,11 +69,10 @@ export class HangoutDetailPage implements OnInit {
       // this.coverImage = 'https://i.picsum.photos/id/195/500/500.jpg';
       // this.thumbImage = 'https://i.picsum.photos/id/195/200/200.jpg';
       this.adminLevel = this.hangInfo.pivot.level;
-      console.log('hangout info: ' + this.hangInfo.pivot.level);
     }
     this.firestoreService.getHangout(Number(this.hangoutId)).valueChanges().subscribe((res: any) => {
-      console.log('Results: ' + res[0].services);
-      console.log('SevicesLength: ' + res[0].services.length);
+      // console.log('Results: ' + res[0].services);
+      // console.log('SevicesLength: ' + res[0].services.length);
       this.fbObj = res[0];
       this.theme = this.fbObj.theme;
       this.services = this.fbObj.services.length > 0;
@@ -99,7 +97,6 @@ export class HangoutDetailPage implements OnInit {
   }
 
   async enlargeImage(img, type) {
-    console.log('clicked on ' + type);
     const imageModal =  await this.modalCtrl.create({
       component: HangoutImageModalPage,
       componentProps: {
@@ -138,7 +135,6 @@ export class HangoutDetailPage implements OnInit {
     });
     await themeModal.present();
     const {data} = await themeModal.onDidDismiss();
-    console.log(data);
     // if (data.new === true) {
     //   this.coverImage = data.img;
     // }
@@ -154,7 +150,6 @@ export class HangoutDetailPage implements OnInit {
     });
     await themeModal.present();
     const {data} = await themeModal.onDidDismiss();
-    console.log(data);
     // if (data.new === true) {
     //   this.coverImage = data.img;
     // }
@@ -174,17 +169,15 @@ export class HangoutDetailPage implements OnInit {
   }
 
   async goToEdit(type) {
-    console.log('hangoutInfo: ' + this.hangInfo);
     const editModal = await this.modalCtrl.create({
       component: HangoutEditPage,
       componentProps: {
         type,
-        data: this.hangInfo
+        data: type === 'hangout' || type === 'message' ? this.hangInfo : this.fbObj
       }
     });
     await editModal.present();
     const {data} = await editModal.onDidDismiss();
-    console.log(data);
     if (data && data.new === true) {
       if (type === 'hangout') {
         this.hangInfo.name = data.data.name;
@@ -193,11 +186,11 @@ export class HangoutDetailPage implements OnInit {
         this.hangInfo.currency_code = data.data.currency_code;
         this.hangInfo.city_id = data.data.city_id;
         this.hangInfo.city_name = data.data.city_name;
+        this.hangInfo.category = data.data.category;
       } else if (type === 'message') {
         this.hangInfo.message_board = data.data.message_board;
       }
     }
-    console.log('Hangout data' + this.hangInfo);
   }
 
   mediaPage(type: string) {

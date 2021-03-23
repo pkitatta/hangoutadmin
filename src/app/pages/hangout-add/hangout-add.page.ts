@@ -26,6 +26,7 @@ export class HangoutAddPage implements OnInit {
   checkFlag = false;
   curcodes: any = [];
   public queryCur: string;
+  catName = 'None';
 
   constructor(
       private formBuilder: FormBuilder,
@@ -51,6 +52,7 @@ export class HangoutAddPage implements OnInit {
       currency_code: ['', [Validators.required, Validators.maxLength(3)]],
       city_id: ['', [Validators.required]],
       city_name: ['', [Validators.required]],
+      category: [''],
       // gps_cords: [''],
     });
   }
@@ -68,7 +70,9 @@ export class HangoutAddPage implements OnInit {
 
   async submit() {
     await this.loadingProvider.show();
-    console.log(this.formData);
+    this.formData.patchValue({
+      category: this.catName
+    });
     this.submitted = true;
 
     if (this.formData.valid) {
@@ -76,14 +80,17 @@ export class HangoutAddPage implements OnInit {
 
       // send http request
       this.hangoutService.addHangout(this.formData).subscribe((response: any) => {
-        console.log(response);
-
+        console.log('Saved on aws');
         this.firestoreService
             .createHangout(response.data.id, response.data.name)
             .then(
-                (res) => {
-                  console.log('saved on firebase: ' + res);
-                  this.loadingProvider.hide();
+                async (res) => {
+                  console.log('saved on fb');
+                  await this.loadingProvider.hide();
+                  await this.modalController.dismiss({
+                    new: true
+                  });
+                  await this.alertService.presentToast('Your Hangout has been create successfully.');
                 },
                 error => {
                   console.error(error);
@@ -95,10 +102,6 @@ export class HangoutAddPage implements OnInit {
         this.loadingProvider.hide();
         this.alertService.presentToast('Error: ' + e.error.message);
       });
-      await this.modalController.dismiss({
-        new: true
-      });
-      await this.alertService.presentToast('Your Hangout has been create successfully.');
     }
   }
 

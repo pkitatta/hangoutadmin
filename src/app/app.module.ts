@@ -34,7 +34,7 @@ import {firebaseConfig} from './api/fire_cred';
     BrowserModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebase),
     AppRoutingModule,
     HttpClientModule,
     AngularFirestoreModule,

@@ -4,12 +4,15 @@
       <ion-button (click)="dismissModal()">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
-      <ion-button color="secondary" fill="outline" (click)="uploadImg()">
-        Done
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <input type="file" accept="image/x-png,image/jpeg,image/gif" (change)="fileChangeEvent($event)" />
+      <ion-buttons slot="start">
+        <input type="file" accept="image/x-png,image/jpeg,image/gif" (change)="fileChangeEvent($event)" />
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="plot-white" (click)="uploadImg()">
+          <ion-icon name="push-outline"></ion-icon>
+          Done
+        </ion-button>
+      </ion-buttons>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

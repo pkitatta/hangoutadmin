@@ -27,7 +27,6 @@ export class HangoutService {
     }
 
     load(): any {
-        console.log('tokenInLoad: ' + this.auth.token.access_token);
         const headers = new HttpHeaders({
             Authorization: this.auth.token.token_type + ' ' + this.auth.token.access_token
         });
@@ -42,8 +41,6 @@ export class HangoutService {
             'Content-Type': 'application/json',
             Authorization: this.auth.token.token_type + ' ' + this.auth.token.access_token
         });
-
-        console.log('new hangout data is: ', formData.value);
 
         return this.http.post(this.env.API_URL + 'hangouts', JSON.stringify(formData.value), {headers});
     }
@@ -61,8 +58,6 @@ export class HangoutService {
             'Content-Type': 'application/json',
             Authorization: this.auth.token.token_type + ' ' + this.auth.token.access_token
         });
-
-        console.log('new hangout edit data is: ', formData.value);
 
         return this.http.put(this.env.API_URL + 'hangouts/' + hangoutId, JSON.stringify(formData.value), {headers});
     }
@@ -138,8 +133,6 @@ export class HangoutService {
             Authorization: this.auth.token.token_type + ' ' + this.auth.token.access_token
         });
 
-        console.log('new hangout edit data is: ', data);
-
         return this.http.put(this.env.API_URL + 'hangouts/anyupdate/' + id, data, {headers});
     }
 
@@ -162,8 +155,6 @@ export class HangoutService {
     }
 
     createComp(formData: FormGroup) {
-        console.log('token: ' + this.auth.token.token_type);
-        console.log('New comp: ' + formData.value);
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             Authorization: this.auth.token.token_type + ' ' + this.auth.token.access_token
@@ -173,8 +164,6 @@ export class HangoutService {
     }
 
     editComp(formData: FormGroup, compId: any) {
-        console.log('token: ' + this.auth.token.token_type);
-        console.log('New comp: ' + formData.value);
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
             Authorization: this.auth.token.token_type + ' ' + this.auth.token.access_token
@@ -229,8 +218,6 @@ export class HangoutService {
     }
 
     uploadPhoto(formData: FormData) {
-        console.log('token: ' + this.auth.token.token_type);
-        console.log('New photo: ' + formData);
         const headers = new HttpHeaders({
             // 'Content-Type': 'multipart/form-data',
             // Accept: 'application/json',

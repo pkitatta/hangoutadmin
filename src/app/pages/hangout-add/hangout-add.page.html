@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>hangout-add</ion-title>
+    <ion-title>Adding Hangout</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -25,6 +25,31 @@
       <span *ngIf="formData.controls.street_address.hasError('required') && formData.controls.street_address.touched" style="color:red;font-size: 12px" padding-left>
       Sorry, street or road name is required!
     </span>
+
+      <ion-item>
+        <ion-label>
+          Category:
+        </ion-label>
+        <ion-select [value]="catName" (ionChange)="catName = $event.target.value">
+          <ion-select-option value="Bar">Bar</ion-select-option>
+          <ion-select-option value="Bar & Restaurant">Bar & Restaurant</ion-select-option>
+          <ion-select-option value="Beach">Beach</ion-select-option>
+          <ion-select-option value="Beach & Bar">Beach & Bar</ion-select-option>
+          <ion-select-option value="Beach & Bar & Restaurant">Beach & Bar & Restaurant</ion-select-option>
+          <ion-select-option value="Beach & Restaurant">Beach & Restaurant</ion-select-option>
+          <ion-select-option value="Club">Club</ion-select-option>
+          <ion-select-option value="Hotel">Hotel</ion-select-option>
+          <ion-select-option value="Hotel & Bar">Hotel & Bar</ion-select-option>
+          <ion-select-option value="Hotel & Bar & Restaurant">Hotel & Bar & Restaurant</ion-select-option>
+          <ion-select-option value="Hotel & Restaurant">Hotel & Restaurant</ion-select-option>
+          <ion-select-option value="Restaurant">Restaurant</ion-select-option>
+          <ion-select-option value="Sports">Sports</ion-select-option>
+          <ion-select-option value="Sports & Bar">Sports & Bar</ion-select-option>
+          <ion-select-option value="Sports & Bar & Restaurant">Sports & Bar & Restaurant</ion-select-option>
+          <ion-select-option value="Sports & Restaurant">Sports & Restaurant</ion-select-option>
+          <ion-select-option value="None">None</ion-select-option>
+        </ion-select>
+      </ion-item>
 
       <!--        <ion-item [ngClass]="{'error-border':!formData.controls.gps_cords.valid && formData.controls.gps_cords.touched}">-->
       <!--            <ion-label class="labels" position="stacked">GPS Coordinates</ion-label>-->

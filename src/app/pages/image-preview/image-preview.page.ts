@@ -30,7 +30,6 @@ export class ImagePreviewPage implements OnInit {
 
   fileProgress(fileInput: any) {
     this.fileData = fileInput.target.files[0] as File;
-    console.log('Image: ' + this.fileData.size);
     this.preview();
   }
 
@@ -49,35 +48,35 @@ export class ImagePreviewPage implements OnInit {
   }
 
   onSubmit() {
-    this.loadingProvider.show();
-    const formData = new FormData();
-    formData.append('imgFile', this.fileData);
-    formData.append('hangoutId', this.hangoutId);
-    formData.append('date', new Date().toString());
-    formData.append('description', this.description);
-    console.log('formData: ' + formData.get('description'));
-    this.hangoutData.uploadPhoto(formData)
-        .subscribe(async (events: any) => {
-          console.log('res: ' + events.data[0].photo_time);
-          this.loadingProvider.hide();
-          // if (events.type === HttpEventType.UploadProgress) {
-          //   this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
-          //   console.log(this.fileUploadProgress);
-          // } else if (events.type === HttpEventType.Response) {
-          //   this.fileUploadProgress = '';
-          //   console.log(events.body);
-          //   alert('SUCCESS !!');
-          // }
-          this.new = true;
-          await this.modalCtrl.dismiss({
-            new: this.new,
-            data: events.data[0]
-          });
+    if (this.fileData != null){
+      this.loadingProvider.show();
+      const formData = new FormData();
+      formData.append('imgFile', this.fileData);
+      formData.append('hangoutId', this.hangoutId);
+      formData.append('date', new Date().toString());
+      formData.append('description', this.description);
+      this.hangoutData.uploadPhoto(formData)
+          .subscribe(async (events: any) => {
+            this.loadingProvider.hide();
+            // if (events.type === HttpEventType.UploadProgress) {
+            //   this.fileUploadProgress = Math.round(events.loaded / events.total * 100) + '%';
+            //   console.log(this.fileUploadProgress);
+            // } else if (events.type === HttpEventType.Response) {
+            //   this.fileUploadProgress = '';
+            //   console.log(events.body);
+            //   alert('SUCCESS !!');
+            // }
+            this.new = true;
+            await this.modalCtrl.dismiss({
+              new: this.new,
+              data: events.data[0]
+            });
 
-        }, error => {
-          console.log(error);
-          this.loadingProvider.hide();
-        }) ;
+          }, error => {
+            console.log(error);
+            this.loadingProvider.hide();
+          });
+    }
   }
 
   close() {

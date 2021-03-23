@@ -22,19 +22,17 @@ export class AuthService {
       if (value) {
         this.token = value;
         this.isLoggedIn = true;
-        console.log('token loaded', this.token);
+        // console.log('token loaded', this.token);
       }
     });
   }
 
   // tslint:disable-next-line:ban-types
   login(email, password) {
-      console.log('In login func');
       return this.http.post(this.env.API_URL + 'auth/login',
         {email, password}
     ).pipe(
         tap(token => {
-            console.log('In tap: ', token);
             this.storage.set('token', token)
               .then(
                   () => {
@@ -46,7 +44,7 @@ export class AuthService {
             this.afAuth.signInWithEmailAndPassword(email, password)
                 .then(
                     res => {
-                        console.log('Firebase auth done: ' + res.user);
+                        console.log('Firebase auth done: ');
                     },
                     err => (err));
             this.token = token;
@@ -96,7 +94,7 @@ export class AuthService {
     return this.storage.get('token').then(
         data => {
           this.token = data;
-          console.log('token got: ' + this.token);
+          // console.log('token got: ' + this.token);
 
           if (this.token != null) {
             this.isLoggedIn = true;

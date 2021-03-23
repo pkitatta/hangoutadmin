@@ -26,6 +26,5 @@ export class HangoutDataService {
 
   setDid(did: any | string, hangIndex: any) {
     this.hangouts[hangIndex].did = did;
-    console.log('Did has been set: ', this.hangouts[hangIndex].did);
   }
 }

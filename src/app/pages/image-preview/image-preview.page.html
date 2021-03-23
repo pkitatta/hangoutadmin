@@ -5,9 +5,7 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
       <ion-title>Upload Photo</ion-title>
-      <!--      <ion-back-button (click)="close()">-->
-      <!--        <ion-icon name="arrow-back"></ion-icon>-->
-      <!--      </ion-back-button>-->
+      <input type="file" name="image" accept="image/*" (change)="fileProgress($event)" />
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -48,14 +46,18 @@
   <ion-list>
     <ion-item>
       <!--      <ion-label position="fixed">Choose File</ion-label>-->
-      <input type="file" name="image" accept="image/*" (change)="fileProgress($event)" />
+<!--      <input type="file" name="image" accept="image/*" (change)="fileProgress($event)" />-->
+      <ion-button color="plot-lite" slot="end" (click)="onSubmit()">
+        <ion-icon name="push-outline"></ion-icon>
+        Upload
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-input maxlength="100" placeholder="Description (optional)" [(ngModel)]='description'></ion-input>
     </ion-item>
     <div *ngIf="previewUrl">
       <img [src]="previewUrl" height="400" />
     </div>
-    <ion-item>
-      <ion-input maxlength="100" placeholder="Description (optional)" [(ngModel)]='description'></ion-input>
-    </ion-item>
-    <ion-button  color="dark" expand="block" class="submit" type="submit" (click)="onSubmit()">Submit</ion-button>
+<!--    <ion-button  color="dark" expand="block" class="submit" type="submit" (click)="onSubmit()">Submit</ion-button>-->
   </ion-list>
 </ion-content>

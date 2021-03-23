@@ -1,9 +1,20 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>menu-image-modal</ion-title>
+  <ion-toolbar *ngIf="showNavBar">
+    <ion-buttons>
+      <ion-button slot="start" (click)="close()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button style="margin-right: 20px;" (click)="takePic()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-button>
+      <ion-button color="red" icon-only (click)="deletePhoto($event)" >
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <img (click)="toggleNavBar()" tappable [src]="image"/>
 </ion-content>

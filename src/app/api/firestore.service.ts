@@ -25,13 +25,14 @@ export class FirestoreService {
         // });
 
         const did = this.firestore.createId();
-        console.log('Document will be written with ID: ', did);
         await this.firestore.collection('hangouts').doc(did).set({
             hid,
             did,
             name,
             theme: false,
-            services: null
+            services: [],
+            drinkFoodBase: null,
+            entryBase: null
         })
             .then((docRef) => {
                 //
@@ -103,7 +104,6 @@ export class FirestoreService {
     }
 
     getHangout(hid: any) {
-        console.log('hangout id type: ' + typeof hid + ', hid: ' + hid);
         return this.firestore.collection('hangouts', ref => ref.where('hid', '==', hid));
     }
 
@@ -200,7 +200,6 @@ export class FirestoreService {
     }
 
     async sendToDelivered(did: string, odid: string) {
-        console.log('hangout id : ' + did + ', odid: ' + odid);
         this.firestore
             .collection('orders', ref => ref.where('hangoutId', '==', did))
             .doc(odid)
@@ -211,7 +210,6 @@ export class FirestoreService {
     }
 
     async sendToEnroute(did: string, odid: string) {
-        console.log('hangout id : ' + did + ', odid: ' + odid);
         this.firestore
             .collection('orders', ref => ref.where('hangoutId', '==', did))
             .doc(odid)

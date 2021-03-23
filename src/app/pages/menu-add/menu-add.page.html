@@ -32,7 +32,7 @@
     </span>
     <ion-item [ngClass]="{'error-border':!formData.controls.price.valid && formData.controls.price.touched}">
       <ion-label class="labels" position="stacked">Price</ion-label>
-      <ion-input type="number" formControlName="price"></ion-input>
+      <ion-input type="number" min="0" formControlName="price"></ion-input>
     </ion-item>
     <span *ngIf="formData.controls.price.hasError('required') && formData.controls.price.touched" style="color:red;font-size: 12px">
       Sorry, field name is required!

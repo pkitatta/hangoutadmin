@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "plotavenue-hangouts",
+    "site": "hangouts-plotavenue",
     "public": "www",
     "ignore": [
       "firebase.json",

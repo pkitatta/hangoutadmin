@@ -32,14 +32,16 @@ export class MenuDetailPage implements OnInit {
         img,
         // mdid: this.route.snapshot.paramMap.get('id'),
         did: this.did,
+        menu: this.menu,
       }
     });
     await imageModal.present();
-    // const { data } = await imageModal.onDidDismiss();
-    // console.log(data);
-    // if (data.new === true) {
-    //   this.coverImage = data.img;
-    // }
+    const { data } = await imageModal.onDidDismiss();
+    console.log(data);
+    if (data.new === true) {
+      this.coverImage = data.data ? data.data : 'http://placehold.it/500x500?text=No+Image+Uploaded';
+      this.menu.photoUrl = this.coverImage;
+    }
   }
 
   async menuEditPage() {

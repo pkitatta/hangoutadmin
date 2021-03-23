@@ -5,6 +5,8 @@ import {HangoutDataService} from '../../services/hangout-data.service';
 import {AuthService} from '../../api/auth.service';
 import {AlertController, MenuController, ModalController, NavController} from '@ionic/angular';
 import {HangoutService} from '../../api/hangout.service';
+import {AlertService} from '../../api/alert.service';
+import {Storage} from '@ionic/storage';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +26,8 @@ export class DashboardPage implements OnInit {
       private router: Router,
       private service: HangoutDataService,
       public alertCtrl: AlertController,
+      private alertService: AlertService,
+      private storage: Storage,
   ) {
     this.menu.enable(true);
   }
@@ -36,15 +40,18 @@ export class DashboardPage implements OnInit {
   }
 
   getHangouts() {
-    console.log('getting hangouts');
     this.hangoutService.load().subscribe((res: any) => {
       this.hangouts = [];
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < res.data.length; i++) {
-        console.log(res.data[i]);
         this.hangouts.push(res.data[i]);
       }
       this.service.setHangouts(this.hangouts);
+    }, error => {
+      console.log('This error: ' + error.status);
+      if (error.status === 401) {
+        this.storage.remove('token').then(() => this.navCtrl.navigateRoot('/landing'));
+      }
     });
   }
 
@@ -62,10 +69,23 @@ export class DashboardPage implements OnInit {
     });
     await loginModal.present();
     const {data} = await loginModal.onDidDismiss();
-    console.log(data);
     if (data.new === true) {
       this.getHangouts();
     }
+  }
+
+  logout() {
+    this.authService.logout().subscribe(
+        (data: any) => {
+          this.alertService.presentToast(data.message);
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          this.navCtrl.navigateRoot('/landing');
+        }
+    );
   }
 
 }

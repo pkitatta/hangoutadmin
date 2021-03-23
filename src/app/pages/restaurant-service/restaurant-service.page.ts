@@ -64,10 +64,10 @@ export class RestaurantServicePage implements OnInit {
 
   getMenu() {
     this.menuList = this.firestoreService.getHangoutMenu(this.did, 'restaurant').valueChanges({ idField: 'mdid' });
-    console.log('menuLength: ' + this.menuList);
-    this.menuList.forEach((menu) => {
-      console.log('menu: ' + menu[0].name);
-    });
+    // console.log('menuLength: ' + this.menuList);
+    // this.menuList.forEach((menu) => {
+    //   console.log('menu: ' + menu[0].name);
+    // });
   }
 
   getOrderData() {

@@ -45,7 +45,7 @@ export class LoginPage implements OnInit {
           this.alertService.presentToast('Logged In');
         },
         error => {
-          console.log(error);
+          console.log('This error: ' + error.status);
           this.loadingProvider.hide();
         },
         async () => {

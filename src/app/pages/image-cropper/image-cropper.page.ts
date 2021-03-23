@@ -3,6 +3,10 @@ import {ModalController, NavParams} from '@ionic/angular';
 import {LoadingProviderService} from '../../services/loading-provider.service';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {ImageService} from '../../api/image.service';
+import {AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask} from '@angular/fire/storage';
+import {Observable} from 'rxjs';
+import {finalize, map} from 'rxjs/operators';
+import {FirestoreService} from '../../api/firestore.service';
 
 @Component({
   selector: 'app-image-cropper',
@@ -10,6 +14,10 @@ import {ImageService} from '../../api/image.service';
   styleUrls: ['./image-cropper.page.scss'],
 })
 export class ImageCropperPage implements OnInit {
+  ref: AngularFireStorageReference;
+  task: AngularFireUploadTask;
+  uploadProgress: Observable<number>;
+  downloadURL: Observable<any>;
   imageChangedEvent: any = '';
   croppedImage: any = '';
   canvasRotation = 0;
@@ -20,11 +28,15 @@ export class ImageCropperPage implements OnInit {
   imageURL: string;
   @Input() type;
   @Input() hangoutId;
+  @Input() did: any;
+  @Input() menu: any;
   constructor(
       private imgService: ImageService,
       private modalController: ModalController,
       public navParams: NavParams,
-      private loading: LoadingProviderService
+      private loading: LoadingProviderService,
+      private afStorage: AngularFireStorage,
+      public firestoreService: FirestoreService,
   ) { }
 
   ngOnInit() {
@@ -47,27 +59,64 @@ export class ImageCropperPage implements OnInit {
     console.log('Load failed');
   }
   async uploadImg() {
-    await this.loading.show();
-    console.log('image: ' + this.croppedImage);
-    const data = {
-      hangoutId: this.hangoutId,
-      photo: this.croppedImage,
-      type: this.type
-    };
-    await this.imgService.uploadCoverPhoto(data, this.type).subscribe((res: any) => {
-      console.log(res);
-      if (res.data) {
-        this.modalController.dismiss({
-          new: true,
-          imgId: res.data.id,
-          data: this.type === 'cover' ? res.data.file : res.data.thumb // this is data: data
+    if (this.croppedImage !== '') {
+      await this.loading.show();
+      if (this.type === 'cover' || this.type === 'hangoutthumb') {
+        const data = {
+          hangoutId: this.hangoutId,
+          photo: this.croppedImage,
+          type: this.type
+        };
+        await this.imgService.uploadCoverPhoto(data, this.type).subscribe((res: any) => {
+          if (res.data) {
+            this.modalController.dismiss({
+              new: true,
+              imgId: res.data.id,
+              data: this.type === 'cover' ? res.data.file : res.data.thumb // this is data: data
+            });
+            this.loading.hide();
+          }
+        }, error => {
+          console.log(error);
+          this.loading.hide();
         });
-        this.loading.hide();
+      } else {
+        // create a random id
+        const randomId = Math.random().toString(36).substring(2);
+
+        // create a reference to the storage bucket location
+        this.ref = await this.afStorage.ref('/hangoutimages/hangoutfoodbar/' + randomId);
+
+        // the put method creates an AngularFireUploadTask
+        // and kicks off the upload
+        this.task = this.ref.putString(this.croppedImage, 'data_url');
+
+        // AngularFireUploadTask provides observable
+        // to get uploadProgress value
+        // this.uploadProgress = this.task.snapshotChanges()
+        // .pipe(map(s => (s.bytesTransferred / s.totalBytes) * 100));
+
+        // // observe upload progress
+        // this.uploadProgress = this.task.percentageChanges();
+        // // get notified when the download URL is available
+        this.task.snapshotChanges().pipe(
+            finalize(async () => {
+              this.downloadURL = await this.ref.getDownloadURL();
+              this.downloadURL.subscribe(url => {
+                this.imageURL = url;
+                this.firestoreService.editMeal({photoUrl: this.imageURL}, this.did, this.menu.mdid);
+                this.modalController.dismiss({
+                  new: true,
+                  data: this.imageURL // this is data: data
+                });
+                this.loading.hide();
+              });
+              // await this.firestoreService.editMeal({photoUrl: this.downloadURL}, this.did, this.menu.mdid);
+            })
+        )
+            .subscribe();
       }
-    }, error => {
-      console.log(error);
-      this.loading.hide();
-    });
+    }
   }
   dismissModal() {
     this.modalController.dismiss({

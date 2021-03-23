@@ -28,10 +28,10 @@ export class FullDateMilliPipe implements PipeTransform {
     // DateFormatPipe
     // Show moment.js dateFormat for time elapsed.
     transform(date: any, args?: any): any {
-        return moment(new Date(parseInt(date, 10))).calendar(null, {
+        return moment(new Date(date)).calendar(null, {
             sameDay: '[Today]',
             lastDay: '[Yesterday]',
-            sameElse: 'DD-MM-YYYY'
+            sameElse: 'DD/MM/YYYY'
         });
     }
 }

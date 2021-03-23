@@ -39,19 +39,59 @@
           <h4>Basic</h4>
         </ion-item>
         <ion-item>
-          <ion-label>
-            <h2>{{hangInfo.name}}</h2>
-            <p>{{hangInfo.street_address}}, {{hangInfo.town}},</p>
-            <p>{{hangInfo.city.name}}, {{hangInfo.city.country.name}}</p>
-          </ion-label>
-          <ion-label>
-            <h2>Currency</h2>
-            <p>{{hangInfo.currency_code}}</p>
-          </ion-label>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-label>
+                  <h2>{{hangInfo.name}}</h2>
+                  <p>{{hangInfo.street_address}}, {{hangInfo.town}},</p>
+                  <p>{{hangInfo.city.name}}, {{hangInfo.city.country.name}}</p>
+                </ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label>
+                  <h2>Currency</h2>
+                  <p>{{hangInfo.currency_code}}</p>
+                </ion-label>
+              </ion-col>
+              <ion-col>
+                <ion-label>
+                  <h2>Category</h2>
+                  <p>{{hangInfo.category ? hangInfo.category : 'Not specified'}}</p>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
           <ion-buttons *ngIf="adminLevel === 1" slot="end">
             <ion-button fill="solid" size="small" color="light" (click)="goToEdit('hangout')">edit
             </ion-button>
           </ion-buttons>
+        </ion-item>
+        <ion-item>
+          <h4>Base Prices</h4>
+        </ion-item>
+        <ion-item *ngIf="fbObj && !fbObj.drinkFoodBase">
+          <p>You have not set your base prices</p>
+          <ion-buttons slot="end">
+            <ion-button fill="solid" size="small" color="light" (click)="goToEdit('drink&entry')">Set</ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item *ngIf="fbObj && fbObj.drinkFoodBase">
+          <ion-label>
+            <h2>{{fbObj.drinkFoodBase.name ? fbObj.drinkFoodBase.name : 'Beer Price'}}</h2>
+            <p>{{fbObj.drinkFoodBase.price}}</p>
+          </ion-label>
+          <ion-label>
+            <h2>{{fbObj.entryBase.name ? fbObj.entryBase.name : 'Entry Price'}}</h2>
+            <p>{{fbObj.entryBase.price}}</p>
+          </ion-label>
+          <ion-buttons *ngIf="adminLevel === 1" slot="end">
+            <ion-button fill="solid" size="small" color="light" (click)="goToEdit('drink&entry')">edit
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <ion-item *ngIf="!fbObj">
+          <p>Loading...</p>
         </ion-item>
         <ion-item>
           <h4>Message Board</h4>

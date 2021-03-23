@@ -30,7 +30,6 @@ export class MediaPage implements OnInit {
   // Use your own locale
 
   segmentChanged(ev: any) {
-    console.log('Segment changed', ev.detail.value);
     if (ev.detail.value === 'hangout') {
       this.getHangoutPhotos();
     } else if (ev.detail.value === 'user') {
@@ -60,7 +59,6 @@ export class MediaPage implements OnInit {
   ionViewDidEnter() {
     // Gets friends in hangout
     setInterval(() => {
-      console.log('interval fired');
       // this.getHangoutPhotos();
     }, 100000);
   }
@@ -71,7 +69,6 @@ export class MediaPage implements OnInit {
       this.hangoutId = this.hangInfo.id;
       this.adminLevel = this.hangInfo.pivot.level;
       this.userId = this.hangInfo.pivot.user_id;
-      console.log('hangout info: ' + this.hangInfo.pivot.level);
     }
     if (this.type === 'hangout') {
       this.getHangoutPhotos();
@@ -84,7 +81,6 @@ export class MediaPage implements OnInit {
 
   async getHangoutPhotos() {
     this.hangoutData.getAdminPhotos(this.hangoutId).subscribe((res: any) => {
-      console.log(res.data);
       this.hangTempList = res.data;
       this.hangPhotoList = this.hangTempList;
       // this.hangPhotoList.forEach((photo) => {
@@ -99,7 +95,6 @@ export class MediaPage implements OnInit {
 
   async getUserPhotos() {
     this.hangoutData.getAUserPhotos(this.hangoutId).subscribe((res: any) => {
-      console.log(res.data);
       this.hangTempList = res.data;
       this.userPhotoList = this.hangTempList;
     });
@@ -107,7 +102,6 @@ export class MediaPage implements OnInit {
 
   async getVideos() {
     this.hangoutData.getVideos(this.hangoutId).subscribe((res: any) => {
-      console.log(res.data);
       this.hangTempList = res.data;
       this.videoList = this.hangTempList;
     });
@@ -128,20 +122,14 @@ export class MediaPage implements OnInit {
     await imageModal.present();
     const {data} = await imageModal.onDidDismiss();
     if (data && data.new === true) {
-      console.log('data: ' + data.data);
       // this.hangTempList.push(data.data);
       // this.hangPhotoList = [];
       // this.hangPhotoList = this.hangTempList;
       this.getHangoutPhotos();
-      console.log('data: ' + this.hangPhotoList);
-      this.hangPhotoList.forEach((photo) => {
-        console.log('data: ' + photo.id);
-      });
     }
   }
 
   async enlargeImage(img, type) {
-    console.log('clicked on ' + type);
     const imageModal =  await this.modalCtrl.create({
       component: HangoutImageModalPage,
       componentProps: {
@@ -156,7 +144,6 @@ export class MediaPage implements OnInit {
     });
     await imageModal.present();
     const { data } = await imageModal.onDidDismiss();
-    console.log(data);
     if (data.new === true) {
       if (type === 'admin' && data.img === null) {
         this.getHangoutPhotos();
@@ -164,7 +151,6 @@ export class MediaPage implements OnInit {
     }
   }
   async enlargeVideo(vid, type) {
-    console.log('clicked on ' + type);
     const imageModal =  await this.modalCtrl.create({
       component: VideoPlayerPage,
       componentProps: {
@@ -179,7 +165,6 @@ export class MediaPage implements OnInit {
     });
     await imageModal.present();
     const { data } = await imageModal.onDidDismiss();
-    console.log(data);
     if (data.new === true) {
       if (type === 'admin' && data.img === null) {
         this.getVideos();
